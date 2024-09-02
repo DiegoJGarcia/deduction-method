@@ -1,31 +1,40 @@
+/* eslint-disable no-undef */
 module.exports = {
-  env: {
-    browser: true,
-    es2021: true,
-  },
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
-  ],
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-  },
-  plugins: ['react', '@typescript-eslint', 'prettier'],
-  rules: {
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
-    'react/react-in-jsx-scope': 'off',
+	env: {
+		browser: true,
+		es2021: true,
+		jest: true,
+	},
+	extends: [
+		'eslint:recommended',
+		'plugin:react/recommended',
+		'plugin:prettier/recommended',
+		'plugin:@typescript-eslint/recommended',
+		'plugin:react-hooks/recommended',
+		'prettier',
+	],
+	parser: '@typescript-eslint/parser',
+	plugins: ['react', 'react-hooks', '@typescript-eslint', 'prettier'],
+	settings: {
+		react: {
+			version: 'detect',
+		},
+	},
+	parserOptions: {
+		ecmaFeatures: {
+			jsx: true,
+		},
+		ecmaVersion: 12,
+		sourceType: 'module',
+	},
+	rules: {
+		'@typescript-eslint/no-unused-vars': 0,
+		'no-unused-vars': 0,
+		'@typescript-eslint/no-explicit-any': 0,
+		'react/react-in-jsx-scope': 'off',
 		'react-hooks/rules-of-hooks': 'error',
 		'react-hooks/exhaustive-deps': 'warn',
 		'react/jsx-filename-extension': [1, { extensions: ['.ts', '.tsx', '.js', '.jsx', '.scss'] }],
-		'no-unused-vars': 0,
 		'react/jsx-no-undef': 2,
 		'react/jsx-wrap-multilines': 2,
 		'react/no-string-refs': 0,
@@ -55,9 +64,4 @@ module.exports = {
 			},
 		],
 	},
-  settings: {
-    react: {
-      version: 'detect',
-    },
-  },
 };

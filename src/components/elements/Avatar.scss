@@ -1,0 +1,22 @@
+.avatar {
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	object-fit: cover;
+	
+	min-width: 27px;
+	min-height: 27px;
+
+	max-width: 174px;
+	max-height: 174px;
+
+	width: stretch;
+	height: stretch;
+
+	&_small {
+		width: 70px;
+		height: 70px;
+	}
+}

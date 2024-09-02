@@ -1,51 +1,67 @@
-# React + TypeScript + Vite
+markdown
+Copiar código
+# Método Deductivo App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto es una aplicación web diseñada para facilitar la creación y gestión de métodos deductivos al estilo de Sherlock Holmes o Dr. House. Permite a los usuarios formular hipótesis, recolectar hechos y realizar experimentos para validar o refutar estas hipótesis.
 
-Currently, two official plugins are available:
+## Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Creación de múltiples métodos deductivos.
+- Añadir y gestionar hipótesis por método.
+- Recolección de hechos como chips o etiquetas.
+- Realización de experimentos para cada hipótesis con resultados verificables.
+- Interfaz de usuario que permite expandir y colapsar las secciones de hipótesis para una navegación limpia.
 
-## Expanding the ESLint configuration
+## Tecnologías Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- React
+- Zustand para manejo del estado
+- Styled Components para estilos
+- Firebase Hosting para despliegue
 
-- Configure the top-level `parserOptions` property like this:
+## Estructura del Proyecto
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+```plaintext
+/src
+  /components       # Componentes de UI reutilizables
+  /styles           # Estilos globales y de temas
+  App.tsx           # Componente principal de la aplicación
+  index.tsx         # Punto de entrada de la aplicación
+  store.ts          # Store de Zustand para manejo de estado
+Código Principal
+App.tsx
+El componente App.tsx maneja la lógica principal para añadir métodos, hipótesis, hechos y experimentos.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+typescript
+Copiar código
+// Ejemplo simplificado para añadir un nuevo método
+const handleCreateNewMethod = () => {
+  addMethod(problem);
+  setProblem('');
+};
+Store.ts
+La store de Zustand define la estructura del estado y las acciones para modificar este estado.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+typescript
+Copiar código
+import create from 'zustand';
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
-# deduction-method
+const useStore = create((set) => ({
+  methods: [],
+  addMethod: (problem) => set((state) => ({
+    methods: [...state.methods, { problem, facts: [], hypotheses: [] }],
+  })),
+}));
+Configuración y Despliegue
+Para configurar y desplegar el proyecto:
+
+Instala las dependencias con npm install.
+Genera el build de producción con npm run build.
+Despliega el build a Firebase usando firebase deploy.
+Contribuciones
+Las contribuciones son bienvenidas. Para contribuir al proyecto, crea un fork del repositorio, haz tus cambios y envía un pull request.
+
+r
+Copiar código
+
+Este README ofrece una descripción clara de lo que hace el proyecto, cómo 

@@ -52,18 +52,10 @@ const MethodPage: React.FC<any> = () => {
 		state.toggleExperimentResult,
 	]);
 	const [problem, setProblem] = useState('');
-	const [expandedHypotheses, setExpandedHypotheses] = useState<{ [key: string]: boolean }>({});
 
 	const handleCreateNewMethod = () => {
 		addMethod();
 		setProblem('');
-	};
-
-	const toggleHypothesisVisibility = (methodIndex: number, hypothesisIndex: number) => {
-		setExpandedHypotheses((prevState: { [x: string]: any }) => ({
-			...prevState,
-			[`${methodIndex}-${hypothesisIndex}`]: !prevState[`${methodIndex}-${hypothesisIndex}`],
-		}));
 	};
 
 	return (
@@ -92,7 +84,6 @@ const MethodPage: React.FC<any> = () => {
 								onChange={value => updateTitle(methodIndex, value)}
 							/>
 						}
-						onClick={() => toggleHypothesisVisibility(methodIndex, 0)}
 						onRemove={() => removeMethod(methodIndex)}
 					>
 						<Content

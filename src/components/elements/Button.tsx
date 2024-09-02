@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import './Button.scss';
 
 import back from 'assets/arrow-back.svg';
@@ -44,7 +44,7 @@ const Button: FC<ButtonProps> = ({
 		}
 	}, [disabled]);
 
-	const clicked = async () => {
+	const clicked = () => {
 		setStatus('load');
 
 		const resetStatus = () => {

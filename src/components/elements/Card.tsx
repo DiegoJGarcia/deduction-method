@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useId, useState } from 'react';
+import { FC, ReactElement, useId, useState } from 'react';
 import './Card.scss';
 
 import remove from 'assets/remove.png';

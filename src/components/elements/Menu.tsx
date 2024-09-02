@@ -1,9 +1,8 @@
-import React, { FC, ReactElement, useEffect, useState } from 'react';
+import React, { FC, ReactElement, useState } from 'react';
 import './Menu.scss';
 
-import Labeled from 'elements/Labeled';
-
 import arrow from 'assets/arrow.svg';
+import Labeled from './Labeled';
 
 type MenuProps = {
 	sections?: string[];
@@ -17,10 +16,9 @@ const Menu: FC<MenuProps> = ({ title, children, bottom, sections, handleSection,
 	const [closed, setClosed] = useState<boolean>(false);
 	const [current, setCurrent] = useState<string>('');
 
-	useEffect(() => console.log('CURRENT', current), [current]);
-
 	const handleCurrent = (section: string) => {
 		setCurrent(section);
+		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 		handleSection && handleSection(section);
 	};
 

@@ -11,6 +11,8 @@ type ActionProps = {
 	type?: 'remove' | 'save';
 	side?: 'left' | 'right';
 	visible?: boolean;
+	notBackground?: boolean;
+	disabled?: boolean;
 };
 
 const Action: FC<ActionProps> = ({
@@ -21,12 +23,20 @@ const Action: FC<ActionProps> = ({
 	type,
 	side = 'right',
 	visible,
+	notBackground,
+	disabled,
 }) => {
 	return (
-		<div className={`action ${className ? ` ${className}` : ''} codes`}>
-			<div className={`action-icon ${type ? `action-icon--${type}` : ''}`} onClick={onClick}>
-				<img src={icon} alt="action-button" />
-			</div>
+		<div
+			className={`action ${className ? ` ${className}` : ''}${disabled ? ' action--disabled' : ''} codes`}
+		>
+			{notBackground ? (
+				<img src={icon} alt="action-button" onClick={onClick} />
+			) : (
+				<div className={`action-icon ${type ? `action-icon--${type}` : ''}`} onClick={onClick}>
+					<img src={icon} alt="action-button" />
+				</div>
+			)}
 			{tooltip && (
 				<div
 					className={`action-tooltip${side ? ` action-tooltip--${side}` : ''}${visible ? ' action-tooltip--visible' : ''} refs`}

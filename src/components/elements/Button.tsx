@@ -3,8 +3,8 @@ import './Button.scss';
 
 import back from 'assets/arrow-back.svg';
 import forward from 'assets/arrow.svg';
-import error from 'assets/error.svg';
-import ok from 'assets/ok.svg';
+import error from 'assets/error.png';
+import ok from 'assets/ok.png';
 import load from 'assets/load.svg';
 
 type ButtonProps = {

@@ -42,20 +42,27 @@
 	}
 
 	&--new {
-		&:before {
-			background: var(--status-new);
+		border: 4px solid var(--status-new);
+		&:hover {
+			transform: scale(1.02);
+			box-shadow: var(--shadow);
+			border: 4px solid var(--status-new);
 		}
 	}
-
 	&--valid {
-		&:before {
-			background: var(--status-wip);
+		border: 4px solid var(--status-valid);
+		&:hover {
+			transform: scale(1.02);
+			box-shadow: var(--shadow);
+			border: 4px solid var(--status-valid);
 		}
 	}
-
 	&--invalid {
-		&:before {
-			background: var(--status-overdue);
+		border: 4px solid var(--status-invalid);
+		&:hover {
+			transform: scale(1.02);
+			box-shadow: var(--shadow);
+			border: 4px solid var(--status-invalid);
 		}
 	}
 }

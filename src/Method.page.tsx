@@ -7,14 +7,15 @@ import Block from 'components/elements/Block';
 import Card from 'components/elements/Card';
 import Content from 'components/elements/Content';
 import { Method } from 'domain/method';
-import { Hypothesis } from 'domain/Hypothesis';
+import { Hypothesis, HYPOTHESIS_STATUS } from 'domain/Hypothesis';
 
 import Action from 'components/elements/Action';
 import Button from 'components/elements/Button';
 
 import remove from 'assets/remove.png';
-import ok from 'assets/ok.svg';
-import error from 'assets/error.svg';
+import ok from 'assets/ok.png';
+import error from 'assets/error.png';
+import { Experiment } from 'domain/Experiment';
 
 const MethodPage: React.FC<any> = () => {
 	const [
@@ -72,7 +73,7 @@ const MethodPage: React.FC<any> = () => {
 				<div className="methods-head titles">
 					<h2>Deducciones</h2>
 					<Button onClick={handleCreateNewMethod} type="primary">
-						Nueva Deducción
+						Añadir Deducción
 					</Button>
 				</div>
 			}
@@ -108,6 +109,13 @@ const MethodPage: React.FC<any> = () => {
 								<Card
 									key={hypothesisIndex}
 									className="methods-list-hypothesis"
+									status={
+										hypothesis.experiments?.length < 2
+											? HYPOTHESIS_STATUS.new
+											: hypothesis.isValid
+												? HYPOTHESIS_STATUS.valid
+												: HYPOTHESIS_STATUS.invalid
+									}
 									title={
 										<Content
 											type="textarea"
@@ -119,7 +127,7 @@ const MethodPage: React.FC<any> = () => {
 									onRemove={() => removeHypothesis(methodIndex, hypothesisIndex)}
 								>
 									<div className="methods-list-hypothesis-experiments">
-										{hypothesis.experiments?.map((experiment, experimentIndex) => (
+										{hypothesis.experiments?.map((experiment: Experiment, experimentIndex) => (
 											<div
 												key={experimentIndex}
 												className="methods-list-hypothesis-experiments-item"
@@ -155,31 +163,37 @@ const MethodPage: React.FC<any> = () => {
 															)
 														}
 													/>
-													{experiment.valid ? (
-														<Action
-															onClick={() =>
-																toggleExperimentResult(
-																	methodIndex,
-																	hypothesisIndex,
-																	experimentIndex,
-																)
-															}
-															tooltip="Marcar como no valido"
-															icon={ok}
-														/>
-													) : (
-														<Action
-															onClick={() =>
-																toggleExperimentResult(
-																	methodIndex,
-																	hypothesisIndex,
-																	experimentIndex,
-																)
-															}
-															tooltip="Marcar como valido"
-															icon={error}
-														/>
-													)}
+													<div className="methods-list-hypothesis-experiments-item-data-result">
+														{experiment.valid ? (
+															<Action
+																onClick={() =>
+																	toggleExperimentResult(
+																		methodIndex,
+																		hypothesisIndex,
+																		experimentIndex,
+																	)
+																}
+																tooltip="Marcar como no valido"
+																notBackground
+																icon={ok}
+																disabled={experiment.consequence === ''}
+															/>
+														) : (
+															<Action
+																onClick={() =>
+																	toggleExperimentResult(
+																		methodIndex,
+																		hypothesisIndex,
+																		experimentIndex,
+																	)
+																}
+																tooltip="Marcar como valido"
+																notBackground
+																icon={error}
+																disabled={experiment.consequence === ''}
+															/>
+														)}
+													</div>
 												</div>
 												<Action
 													className="methods-list-hypothesis-experiments-item-action"
@@ -187,7 +201,7 @@ const MethodPage: React.FC<any> = () => {
 													onClick={() =>
 														removeExperiment(methodIndex, hypothesisIndex, experimentIndex)
 													}
-													tooltip="Eliminar experimento"
+													tooltip="Eliminar"
 													icon={remove}
 												/>
 											</div>
@@ -203,7 +217,7 @@ const MethodPage: React.FC<any> = () => {
 							))}
 						</div>
 						<Button type="secondary" onClick={() => addHypothesis(methodIndex, '')}>
-							Nueva Hipotesis
+							Añadir Hipotesis
 						</Button>
 					</Card>
 					<div className="methods-list-facts">
@@ -213,7 +227,7 @@ const MethodPage: React.FC<any> = () => {
 									key={factIndex}
 									type="text"
 									name="fact"
-									placeholder="Hecho"
+									placeholder={`Pista ${factIndex + 1}`}
 									value={fact}
 									onChange={value => updateFact(methodIndex, factIndex, value)}
 								/>
@@ -226,7 +240,13 @@ const MethodPage: React.FC<any> = () => {
 								/>
 							</div>
 						))}
-						<Action onClick={() => addFact(methodIndex, '')} tooltip="Añadir hecho" />
+						<Button
+							className="methods-list-facts-action"
+							type="tertiary"
+							onClick={() => addFact(methodIndex, '')}
+						>
+							Añadir Pista
+						</Button>
 					</div>
 				</div>
 			))}

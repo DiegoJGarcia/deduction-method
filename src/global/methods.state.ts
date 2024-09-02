@@ -3,23 +3,23 @@ import { Method } from '../domain/method';
 export interface MethodStore {
 	methods: Method[];
 
-	// Métodos relacionados con Method
+	// Method
 	addMethod: () => void;
 	removeMethod: (methodIndex: number) => void;
 	updateTitle: (methodIndex: number, title: string) => void;
 	updateProblem: (methodIndex: number, problem: string) => void;
 
-	// Métodos relacionados con Hypothesis
-	addHypothesis: (methodIndex: number, hypothesisText: string) => void;
-	updateHypothesis: (methodIndex: number, hypothesisIndex: number, hypothesisText: string) => void;
-	removeHypothesis: (methodIndex: number, hypothesisIndex: number) => void;
-
-	// Métodos relacionados con Fact
+	// Fact
 	addFact: (methodIndex: number, fact: string) => void;
 	updateFact: (methodIndex: number, factIndex: number, fact: string) => void;
 	removeFact: (methodIndex: number, factIndex: number) => void;
 
-	// Métodos relacionados con Experiment
+	// Hypothesis
+	addHypothesis: (methodIndex: number, hypothesisText: string) => void;
+	updateHypothesis: (methodIndex: number, hypothesisIndex: number, hypothesisText: string) => void;
+	removeHypothesis: (methodIndex: number, hypothesisIndex: number) => void;
+
+	// Experiment
 	addExperiment: (
 		methodIndex: number,
 		hypothesisIndex: number,

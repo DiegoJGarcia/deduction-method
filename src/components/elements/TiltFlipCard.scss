@@ -1,0 +1,133 @@
+.tilt_flip_card {
+  position: relative;
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+  width: 600px;
+  height: 50vh;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease-in-out;
+
+  cursor: pointer;
+  
+  &.is-flipped {
+    transform: rotateY(180deg);
+  }
+
+  &_tilt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s ease-in-out;
+    margin: 20px;
+
+    &:hover {
+      .card_title {
+        top: -140px;
+        height: 200px;
+      }
+      .card_inner {
+        transform: translateY(-10px);
+      }
+      .card_actions {
+        opacity: 1;
+        transition: opacity 1s ease-in-out;
+      }
+      .card_inner_front_item {
+        opacity: 1;
+      }
+    }
+  }
+
+  &_title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    flex: 1;
+    margin: 0;
+    transition: transform 1s ease-in-out;
+  }
+
+  &_inner {
+    display: flex;
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease-in-out;
+
+    &_front,
+    &_back {
+      display: flex;
+      flex-direction: column;
+      justify-content: stretch;
+      align-items: stretch;
+      position: absolute;
+      text-align: center;
+      width: 600px;
+      height: 50vh;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease-in-out;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.1);
+
+    }
+  
+    &_front {
+      position: absolute;
+  
+      transform: rotateY(0deg);
+      background-color: var(--color_core);
+      
+      &_item {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        background-color: #333333;
+        padding: 10px 20px;
+        height: 100%;
+        z-index: 9;
+
+        &:nth-child(2) {
+          border-radius: 10px 10px 0 0;
+        }
+        
+        &:last-child {
+          border-radius: 0 0 10px 10px;
+        }
+    
+        &:hover {
+          background-color: #555555;
+        }
+      }
+    }
+  
+    &_back {
+      transform: rotateY(180deg);
+      background-color: var(--color_core);
+
+      &_title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: -60px;
+        width: 100%;
+        margin: 0;
+        transition: transform 1s ease-in-out;
+      }
+    }
+  }
+
+  &_actions {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    gap: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+}

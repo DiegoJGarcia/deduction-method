@@ -1,0 +1,43 @@
+.add {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+
+	gap: var(--inner-gap);
+
+	transition: var(--transition);
+	border: none;
+
+	&-label {
+		opacity: 0%;
+		width: 0;
+    font-size: 0;  
+		white-space: nowrap;
+	}
+  
+	&-icon {
+    background: var(--first);
+		width: 40px;
+		height: 40px;
+		padding: 12px;
+		border-radius: 50%;
+		cursor: pointer;
+	}
+  
+	&:hover {
+		.add-label {
+      width: 100%;
+			opacity: 100%;
+      font-size: medium;
+		}
+	}
+
+	&:disabled {
+		background: grey;
+		&:hover {
+			transform: none;
+			cursor: auto;
+			box-shadow: none;
+		}
+	}
+}

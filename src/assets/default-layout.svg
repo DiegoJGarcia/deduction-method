@@ -1,0 +1,5 @@
+<svg class="hamburger-menu" width="30px" height="30px" viewBox="0 0 30 30">
+  <path d="M0,10 L30,10" stroke-width="3" stroke="#000" />
+  <path d="M0,15 L30,15" stroke-width="6" stroke="#000" />
+  <path d="M0,20 L30,20" stroke-width="9" stroke="#000" />
+</svg>

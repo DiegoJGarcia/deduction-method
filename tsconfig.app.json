@@ -18,7 +18,21 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "baseUrl": "./src",
+    "paths": {
+      "assets/*": ["assets/*"],
+      "components/*": ["components/*"],
+      "elements/*": ["elements/*"],
+      "layouts/*": ["layouts/*"],
+      "domain/*": ["domain/*"],
+      "global/*": ["global/*"],
+      "utils/*": ["utils/*"],
+      "common/*": ["common/*"],
+      "hooks/*": ["hooks/*"],
+    },
   },
-  "include": ["src"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }

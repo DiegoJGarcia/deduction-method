@@ -1,0 +1,21 @@
+.presentation {
+	display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+  
+  transition: var(--transition);
+
+  gap: var(--inner-gap);
+
+	min-width: 222px;
+	min-height: fit-content;
+
+	width: 100%;
+
+  padding: var(--padding);
+  border-radius: var(--radius);
+  user-select: none;
+
+}

@@ -1,0 +1,68 @@
+.card {
+	display: flex;
+	flex-direction: column;
+	cursor: pointer;
+	padding: var(--padding);
+	background: var(--background_main);
+	border-radius: var(--radius);
+	border: var(--border);
+	position: relative;
+
+	&:hover {
+		border: var(--border_hover);
+	}
+
+	&-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+		gap: var(--inner-gap);
+
+		&-title {
+			width: 100%;
+		}
+
+		&-remove {
+			opacity: 0;
+			transition: opacity 0.3s ease;
+		}
+	}
+
+	&:hover > .card-head > .card-head-remove {
+		opacity: 1;
+	}
+
+	&--focus {
+		box-shadow: var(--shadow-up) var(--shadow-color);
+	}
+
+	&--blured {
+		filter: blur(7px) opacity(0.4);
+	}
+
+	&--new {
+		border: 4px solid var(--status-new);
+		&:hover {
+			transform: scale(1.02);
+			box-shadow: var(--shadow);
+			border: 4px solid var(--status-new);
+		}
+	}
+	&--valid {
+		border: 4px solid var(--status-valid);
+		&:hover {
+			transform: scale(1.02);
+			box-shadow: var(--shadow);
+			border: 4px solid var(--status-valid);
+		}
+	}
+	&--invalid {
+		border: 4px solid var(--status-invalid);
+		&:hover {
+			transform: scale(1.02);
+			box-shadow: var(--shadow);
+			border: 4px solid var(--status-invalid);
+		}
+	}
+}

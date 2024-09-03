@@ -5,7 +5,7 @@
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
-	gap: var(--inner-gap);
+	// gap: var(--inner-gap);
 	
 	&-main {
 		width: 100%;
@@ -14,6 +14,7 @@
 		overflow: hidden;
 		padding: 22px 44px;
 		background: var(--background_main);
+		z-index: 9;
 	}
 	
 	&-content {

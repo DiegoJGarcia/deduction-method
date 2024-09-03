@@ -86,3 +86,9 @@
 		pointer-events: none;
 	}
 }
+
+@media (max-width: 768px) {
+	.action-tooltip {
+		display: none;
+	}
+}

@@ -29,9 +29,10 @@
 
 	&-wrapper {
 		width: 100%;
+		min-width: 87vw;
 		display: flex;
-		justify-content: flex-start;
-		align-items: flex-start;
+		justify-content: center;
+		align-items: center;
 		gap: var(--gap);
 		padding-bottom: 44px;
 		flex-wrap: wrap;

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import './Method.style.scss';
+import './Deductions.style.scss';
 
-import useMethodsStore from 'global/methods.store';
+import useDeductionsStore from 'global/deductions.store';
 
 import Block from 'components/elements/Block';
 import Card from 'components/elements/Card';
 import Content from 'components/elements/Content';
-import { Method } from 'domain/method';
+import { Deduction } from 'domain/deduction';
 import { Hypothesis, HYPOTHESIS_STATUS } from 'domain/Hypothesis';
 
 import Action from 'components/elements/Action';
@@ -15,15 +15,19 @@ import Button from 'components/elements/Button';
 import remove from 'assets/remove.png';
 import ok from 'assets/ok.png';
 import error from 'assets/error.png';
-import { Experiment } from 'domain/Experiment';
+import eye from 'assets/eye.png';
 
-const MethodPage: React.FC<any> = () => {
+import { Experiment } from 'domain/Experiment';
+import Modal from 'components/elements/Modal';
+
+const DeductionPage: React.FC<any> = () => {
 	const [
 		methods,
 		addMethod,
 		removeMethod,
 		updateTitle,
 		updateProblem,
+		updateConclusion,
 		addFact,
 		updateFact,
 		removeFact,
@@ -34,12 +38,13 @@ const MethodPage: React.FC<any> = () => {
 		updateExperiment,
 		removeExperiment,
 		toggleExperimentResult,
-	] = useMethodsStore(state => [
+	] = useDeductionsStore(state => [
 		state.methods,
 		state.addMethod,
 		state.removeMethod,
 		state.updateTitle,
 		state.updateProblem,
+		state.updateConclusion,
 		state.addFact,
 		state.updateFact,
 		state.removeFact,
@@ -51,12 +56,8 @@ const MethodPage: React.FC<any> = () => {
 		state.removeExperiment,
 		state.toggleExperimentResult,
 	]);
-	const [problem, setProblem] = useState('');
 
-	const handleCreateNewMethod = () => {
-		addMethod();
-		setProblem('');
-	};
+	const [showFacts, setShowFacts] = useState(false);
 
 	return (
 		<Block
@@ -64,13 +65,13 @@ const MethodPage: React.FC<any> = () => {
 			main={
 				<div className="methods-head titles">
 					<h2>Deducciones</h2>
-					<Button onClick={handleCreateNewMethod} type="primary">
+					<Button onClick={addMethod} type="primary">
 						Añadir Deducción
 					</Button>
 				</div>
 			}
 		>
-			{methods?.map((method: Method, methodIndex: number) => (
+			{methods?.map((deduction: Deduction, methodIndex: number) => (
 				<div key={methodIndex} className="methods-wrapper">
 					<Card
 						className="methods-main"
@@ -80,23 +81,30 @@ const MethodPage: React.FC<any> = () => {
 								type="text"
 								name="title"
 								className="methods-title"
-								value={method.title.toUpperCase()}
+								value={deduction.title.toUpperCase()}
 								onChange={value => updateTitle(methodIndex, value)}
 							/>
 						}
 						onRemove={() => removeMethod(methodIndex)}
 					>
 						<Content
-							key={problem}
 							type="textarea"
 							name="problem"
 							className="methods-problem"
 							placeholder="Describe el problema"
-							value={method.problem.toUpperCase()}
+							value={deduction.problem?.toUpperCase()}
 							onChange={value => updateProblem(methodIndex, value)}
 						/>
+						<Content
+							type="textarea"
+							name="conclusion"
+							className="methods-conclusion"
+							placeholder="Escribe una conclusion"
+							value={deduction.conclusion?.toUpperCase()}
+							onChange={value => updateConclusion(methodIndex, value)}
+						/>
 						<div className="methods-list">
-							{method.hypotheses?.map((hypothesis: Hypothesis, hypothesisIndex: number) => (
+							{deduction.hypotheses?.map((hypothesis: Hypothesis, hypothesisIndex: number) => (
 								<Card
 									key={hypothesisIndex}
 									className="methods-list-hypothesis"
@@ -141,7 +149,7 @@ const MethodPage: React.FC<any> = () => {
 													/>
 													<Content
 														type="text"
-														name="method"
+														name="deduction"
 														placeholder="Método de comprobación"
 														value={experiment.experiment}
 														onChange={value =>
@@ -207,42 +215,52 @@ const MethodPage: React.FC<any> = () => {
 								</Card>
 							))}
 						</div>
-						<Button type="secondary" onClick={() => addHypothesis(methodIndex, '')}>
-							Añadir Hipotesis
-						</Button>
+						<div className="methods-list-actions">
+							<Action
+								onClick={() => setShowFacts(true)}
+								icon={eye}
+								tooltip="Ver Pistas"
+								notBackground
+							/>
+							<Button type="secondary" onClick={() => addHypothesis(methodIndex, '')}>
+								Añadir Hipotesis
+							</Button>
+						</div>
 					</Card>
-					<div className="methods-list-facts">
-						{method.facts?.map((fact: string, factIndex: number) => (
-							<div key={factIndex} className="methods-list-facts-item">
-								<Content
-									key={factIndex}
-									type="text"
-									name="fact"
-									placeholder={`Pista ${factIndex + 1}`}
-									value={fact}
-									onChange={value => updateFact(methodIndex, factIndex, value)}
-								/>
-								<Action
-									className="methods-list-facts-item-action"
-									type="remove"
-									onClick={() => removeFact(methodIndex, factIndex)}
-									tooltip="Eliminar hecho"
-									icon={remove}
-								/>
-							</div>
-						))}
-						<Button
-							className="methods-list-facts-action"
-							type="tertiary"
-							onClick={() => addFact(methodIndex, '')}
-						>
-							Añadir Pista
-						</Button>
-					</div>
+					<Modal open={showFacts} onClose={() => setShowFacts(false)} title="Pistas">
+						<div className="methods-list-facts">
+							{deduction.facts?.map((fact: string, factIndex: number) => (
+								<div key={factIndex} className="methods-list-facts-item">
+									<Content
+										key={factIndex}
+										type="text"
+										name="fact"
+										placeholder={`Pista ${factIndex + 1}`}
+										value={fact}
+										onChange={value => updateFact(methodIndex, factIndex, value)}
+									/>
+									<Action
+										className="methods-list-facts-item-action"
+										type="remove"
+										onClick={() => removeFact(methodIndex, factIndex)}
+										tooltip="Eliminar hecho"
+										icon={remove}
+									/>
+								</div>
+							))}
+							<Button
+								className="methods-list-facts-action"
+								type="tertiary"
+								onClick={() => addFact(methodIndex, '')}
+							>
+								Añadir Pista
+							</Button>
+						</div>
+					</Modal>
 				</div>
 			))}
 		</Block>
 	);
 };
 
-export default MethodPage;
+export default DeductionPage;

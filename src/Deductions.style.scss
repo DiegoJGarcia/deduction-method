@@ -39,7 +39,7 @@
 
 		&:not(:last-child) {
 			padding-bottom: var(--gap);
-			border-bottom: 1px solid #19191a;
+			border-bottom: 2px solid #19191a;
 		}
 	}
 
@@ -87,6 +87,13 @@
 			&-action {
 				margin: 22px;
 			}
+		}
+
+		&-actions {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
 		}
 
 		&-hypothesis {
@@ -160,9 +167,14 @@
 			flex-wrap: nowrap;
 			font-size: x-large;
 
-		> button {
-			position: relative;
+			> button {
+				position: relative;
+			}
 		}
+
+		&-wrapper {
+			justify-content: flex-start;
+			align-items: flex-start;
 		}
 
 		&-main {
@@ -179,7 +191,7 @@
 				flex-wrap: wrap;
 
 				&-item {
-					max-width: fit-content;
+					width: fit-content;
 				}
 			}
 

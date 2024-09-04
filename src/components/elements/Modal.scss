@@ -1,0 +1,32 @@
+.modal {
+	display: none;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	
+	position: fixed;
+	top: 0;
+	user-select: none;
+	gap: var(--inner-gap);
+	width: 100vw;
+	height: 100vh;
+	padding: var(--padding);
+	background: #00000066;
+	backdrop-filter: blur(7px);
+	box-shadow: var(--shadow-up) var(--shadow-color);
+	z-index: 99;
+
+	&-title {
+		width: 100%;
+	}
+
+	&-close {
+		position: absolute;
+		top: 22px;
+		right: 22px;
+	}
+
+	&--open {
+		display: flex;
+	}
+}

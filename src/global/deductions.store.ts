@@ -1,7 +1,7 @@
-import { initialMethodsState, MethodStore } from './methods.state';
+import { initialMethodsState, MethodStore } from './deductions.state';
 import { createStoreWithMiddleware } from '../utils/storeCreator.util';
 
-const useMethodsStore = createStoreWithMiddleware<MethodStore>(
+const useDeductionsStore = createStoreWithMiddleware<MethodStore>(
 	set => ({
 		methods: initialMethodsState,
 
@@ -36,6 +36,13 @@ const useMethodsStore = createStoreWithMiddleware<MethodStore>(
 			set(state => {
 				const updatedMethods = [...state.methods];
 				updatedMethods[methodIndex].problem = problem;
+				return { methods: updatedMethods };
+			}),
+
+		updateConclusion: (methodIndex, conclusion) =>
+			set(state => {
+				const updatedMethods = [...state.methods];
+				updatedMethods[methodIndex].conclusion = conclusion;
 				return { methods: updatedMethods };
 			}),
 
@@ -140,4 +147,4 @@ const useMethodsStore = createStoreWithMiddleware<MethodStore>(
 	{ name: 'methods' },
 );
 
-export default useMethodsStore;
+export default useDeductionsStore;

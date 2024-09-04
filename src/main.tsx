@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './main.scss';
 
-import MethodPage from './Method.page.tsx';
+import DeductionPage from './Deductions.page.tsx';
 import { registerSW } from 'virtual:pwa-register';
 
 // Registrar el Service Worker para la funcionalidad PWA
@@ -18,6 +18,6 @@ registerSW({
 // Renderizar la aplicación en el DOM
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
-		<MethodPage />
+		<DeductionPage />
 	</StrictMode>,
 );

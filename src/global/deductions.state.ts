@@ -1,13 +1,14 @@
-import { Method } from '../domain/method';
+import { Deduction } from '../domain/deduction';
 
 export interface MethodStore {
-	methods: Method[];
+	methods: Deduction[];
 
-	// Method
+	// Deduction
 	addMethod: () => void;
 	removeMethod: (methodIndex: number) => void;
 	updateTitle: (methodIndex: number, title: string) => void;
 	updateProblem: (methodIndex: number, problem: string) => void;
+	updateConclusion: (methodIndex: number, conclusion: string) => void;
 
 	// Fact
 	addFact: (methodIndex: number, fact: string) => void;
@@ -41,4 +42,4 @@ export interface MethodStore {
 	) => void;
 }
 
-export const initialMethodsState: Method[] = [];
+export const initialMethodsState: Deduction[] = [];

@@ -6,8 +6,10 @@
 	position: relative;
 	max-width: fit-content;
 	border: var(--border);
+	padding: 4px;
 	border-radius: 50%;
 	z-index: 11;
+	cursor: pointer;
 
 	&-tooltip {
 		opacity: 0;
@@ -46,14 +48,13 @@
 	}
 	
 	&-icon {
-		z-index: 11;
+		z-index: 22;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		border-radius: 50%;
 		padding: 7px;
 		background: var(--third);
-		border: var(--border);
 		cursor: pointer;
 		
 		> img {

@@ -1,0 +1,30 @@
+.label {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	padding: 4px 9px;
+	gap: var(--inner-gap);
+	cursor: pointer;
+
+	border: var(--border);
+	border-radius: var(--radius);
+
+	&--focus {
+		filter: blur(0) opacity(1);
+		box-shadow: var(--shadow-up) var(--shadow-color);
+	}
+
+	&-remove {
+		cursor: pointer;
+		padding: 2px 0 0 0;
+		color: var(--error);
+	}
+
+	&:hover {
+		border: var(--border_hover);
+		box-shadow: var(--shadow-up) var(--shadow-color);
+		transform: var(--transform);
+
+		filter: blur(0) opacity(1);
+	}
+}

@@ -1,11 +1,12 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './main.scss';
+import { BrowserRouter } from 'react-router-dom';
 
-import DeductionPage from './Deductions.page.tsx';
 import { registerSW } from 'virtual:pwa-register';
 
-// Registrar el Service Worker para la funcionalidad PWA
+import App from './App.tsx';
+
 registerSW({
 	onNeedRefresh() {
 		console.log('Nueva versión disponible. Por favor, refresca la página.');
@@ -15,9 +16,10 @@ registerSW({
 	},
 });
 
-// Renderizar la aplicación en el DOM
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
-		<DeductionPage />
+		<BrowserRouter>
+			<App />
+		</BrowserRouter>
 	</StrictMode>,
 );

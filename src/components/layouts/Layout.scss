@@ -3,21 +3,21 @@
 	height: 100vh;
 
 	background: var(--background);
-
+	
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
-	padding: 0 77px 44px 77px;
-	gap: var(--gap);
-
+	// gap: var(--gap);
+	
 	&-head {
 		width: 100%;
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		background: var(--background_main);
 	}
-	
+
 	&-main {
 		height: 100%;
 		width: 100%;

@@ -1,4 +1,4 @@
-.methods {
+.deductions {
 	width: 100%;
 	height: 100%;
 	display: flex;
@@ -6,9 +6,11 @@
 	align-items: flex-start;
 	flex-wrap: wrap;
 	gap: var(--gap);
+	padding: var(--padding);
 
 	&-title,
-	&-problem {
+	&-problem,
+	&-conclusion {
 		color: var(--second_text_color);
 	}
 
@@ -16,8 +18,9 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		flex-wrap: wrap;
+		flex-wrap: wrap; 
 		font-size: larger;
+		max-height: 11vh;
 
 		> button {
 			position: fixed;
@@ -58,18 +61,25 @@
 		gap: var(--inner-gap);
 		padding: 22px 0;
 
-		&-facts,
-		&-hypothesis {
+		&-clues {
 			width: 100%;
+			height: 100%;
 			display: flex;
 			flex-direction: column;
-			gap: var(--inner-gap);
-		}
+			gap: 22px;
+			justify-content: flex-end;
+			align-items: flex-start;
 
-		&-facts {
-			justify-content: flex-start;
+			&-action {
+				width: 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 77px;
+			}
 
 			&-item {
+				width: 100%;
 				display: flex;
 				justify-content: flex-start;
 				align-items: center;
@@ -79,13 +89,9 @@
 					opacity: 0;
 				}
 
-				&:hover .methods-list-facts-item-action {
+				&:hover .deductions-list-clues-item-action {
 					opacity: 1;
 				}
-			}
-
-			&-action {
-				margin: 22px;
 			}
 		}
 
@@ -97,6 +103,10 @@
 		}
 
 		&-hypothesis {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			gap: var(--inner-gap);
 			position: relative;
 
 			&-experiments {
@@ -138,29 +148,27 @@
 						opacity: 0;
 					}
 
-					&:hover .methods-list-hypothesis-experiments-item-action {
+					&:hover .deductions-list-hypothesis-experiments-item-action {
 						opacity: 1;
 					}
 				}
 			}
-
-			&-validation {
-				width: 100%;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				gap: 4px;
-
-				> * {
-					width: 100%;
-				}
-			}
 		}
+	}
+
+	&-emptystate {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+
 	}
 }
 
 @media (min-width: 768px) {
-	.methods {
+	.deductions {
 		&-head {
 			justify-content: space-between;
 			align-items: flex-end;
@@ -173,8 +181,12 @@
 		}
 
 		&-wrapper {
+			width: auto;
 			justify-content: flex-start;
 			align-items: flex-start;
+			&:not(:last-child) {
+				border-bottom: none;
+			}
 		}
 
 		&-main {
@@ -184,20 +196,25 @@
 		}
 
 		&-list {
-			&-facts {
-				max-height: 50vh;
-				max-width: fit-content;
-
+			flex-direction: row;
+			flex-wrap: wrap;
+			
+			&-clues {
+				flex-direction: row;
+				justify-content: flex-start;
+				align-items: flex-end;
 				flex-wrap: wrap;
-
-				&-item {
-					width: fit-content;
-				}
+				padding: 0 77px;
 			}
 
 			&-hypothesis {
 				align-items: flex-end;
-				width: 400px;
+				width: fit-content;
+				min-height: 222px;
+
+				&-experiments {
+					flex-direction: row;
+				}
 			}
 		}
 	}

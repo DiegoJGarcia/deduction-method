@@ -13,23 +13,25 @@
 	}
 
 	&-head {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
 		width: 100%;
-		gap: var(--inner-gap);
+		display: flex;
+		justify-content: center;
+		align-items: center;
 
 		&-title {
 			width: 100%;
 		}
-
-		&-remove {
-			opacity: 0;
-			transition: opacity 0.3s ease;
-		}
 	}
 
-	&:hover > .card-head > .card-head-remove {
+	&-remove {
+		position: absolute;
+		top: 7px;
+		right: 7px;
+		opacity: 0;
+		transition: opacity 0.3s ease;
+	}
+
+	&:hover > .card-remove {
 		opacity: 1;
 	}
 

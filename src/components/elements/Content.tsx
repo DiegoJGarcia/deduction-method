@@ -4,8 +4,25 @@ import useDebounceEffect from 'hooks/debounceEffect.hook';
 import moment from 'moment';
 import arrowBack from 'assets/arrow-back.svg';
 import arrow from 'assets/arrow.svg';
-import { MONTHS, MONTHS_LIST } from 'common/constants';
 import Button from './Button';
+
+export const MONTHS: Record<string, string> = {
+	january: 'Enero',
+	february: 'Febrero',
+	march: 'Marzo',
+	april: 'Abril',
+	may: 'Mayo',
+	june: 'Junio',
+	july: 'Julio',
+	august: 'Agosto',
+	september: 'Septiembre',
+	october: 'Octubre',
+	november: 'Noviembre',
+	december: 'Diciembre',
+};
+
+export const DAYS = ['mo', 'tu', 'we', 'th', 'fr', 'sa', 'su'];
+export const MONTHS_LIST: string[] = Object.keys(MONTHS);
 
 type ContentProps = {
 	type: 'text' | 'textarea' | 'number' | 'date' | 'checkbox' | 'email' | 'tel' | 'url' | 'search';
@@ -25,7 +42,7 @@ type ContentProps = {
 	className?: string;
 	align?: 'left' | 'center' | 'right';
 	prefix?: string;
-	suffix?: string;
+	suffix?: string | React.ReactNode;
 	showFix?: boolean;
 	autoFocus?: boolean;
 	tabIndex?: number;
@@ -186,7 +203,7 @@ const Content: FC<ContentProps> = ({
 					/>
 				) : type === 'textarea' ? (
 					<textarea
-						autoFocus
+						autoFocus={autoFocus}
 						inputMode={getInputMode()}
 						ref={textRef}
 						name={name}
@@ -211,6 +228,7 @@ const Content: FC<ContentProps> = ({
 					</>
 				) : type === 'checkbox' ? (
 					<input
+						autoFocus={autoFocus}
 						type="checkbox"
 						id={name}
 						className={`${className ? `${className} ` : ''}values`}

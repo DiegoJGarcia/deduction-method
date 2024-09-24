@@ -10,7 +10,7 @@ export default defineConfig({
 		VitePWA({
 			registerType: 'autoUpdate',
 			manifest: {
-				name: 'Deduction Deduction',
+				name: 'Deduction Method',
 				short_name: 'DeductionMethod',
 				description: 'Una aplicación para gestionar el método hipotético-deductivo.',
 				theme_color: '#8e44ad',
@@ -40,6 +40,7 @@ export default defineConfig({
 			utils: path.resolve(__dirname, 'src/utils'),
 			common: path.resolve(__dirname, 'src/common'),
 			hooks: path.resolve(__dirname, 'src/hooks'),
+			pages: path.resolve(__dirname, 'src/pages'),
 		},
 	},
 });

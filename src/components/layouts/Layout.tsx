@@ -3,15 +3,17 @@ import './Layout.scss';
 
 interface LayoutProps {
 	title?: string;
+	action?: React.ReactNode;
 	children?: React.ReactNode;
 }
 
-const Layout: FC<LayoutProps> = ({ title, children }) => {
+const Layout: FC<LayoutProps> = ({ title, action, children }) => {
 	return (
 		<div className={`layout`}>
 			{title && (
 				<div className={`layout-head`}>
 					<h1 className="bigtitles">{title}</h1>
+					<div className="layout-head-actions">{action}</div>
 				</div>
 			)}
 			<div className={`layout-main`}>{children}</div>

@@ -27,13 +27,19 @@ const Action: FC<ActionProps> = ({
 	disabled,
 }) => {
 	return (
-		<div
-			className={`action ${className ? ` ${className}` : ''}${disabled ? ' action--disabled' : ''} codes`}
-		>
+		<div className={`action ${className ? ` ${className}` : ''} codes`}>
 			{notBackground ? (
-				<img src={icon} alt="action-button" onClick={onClick} />
+				<img
+					src={icon}
+					alt="action-button"
+					onClick={onClick}
+					className={`${disabled ? ' action--disabled' : ''}`}
+				/>
 			) : (
-				<div className={`action-icon ${type ? `action-icon--${type}` : ''}`} onClick={onClick}>
+				<div
+					className={`action-icon ${type ? `action-icon--${type}` : ''}${disabled ? ' action--disabled' : ''}`}
+					onClick={onClick}
+				>
 					<img src={icon} alt="action-button" />
 				</div>
 			)}

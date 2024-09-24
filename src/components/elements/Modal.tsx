@@ -21,6 +21,7 @@ const Modal: FC<ModalProps> = ({ title, open = false, onClose, children }) => {
 				icon={error}
 				tooltip="Cerrar"
 				notBackground
+				side="left"
 			/>
 			<div className="modal-body">{children}</div>
 		</div>

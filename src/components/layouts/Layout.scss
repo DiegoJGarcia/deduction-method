@@ -8,13 +8,13 @@
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
-	// gap: var(--gap);
 	
 	&-head {
 		width: 100%;
 		display: flex;
-		justify-content: center;
+		justify-content: space-between;
 		align-items: center;
+		padding: 0 var(--padding);
 		background: var(--background_main);
 	}
 

@@ -1,23 +1,21 @@
-import React, { FC, useState } from 'react';
-import Label from './Label'; // Importamos el componente Label que ya tienes
-import './Labeler.scss'; // Estilos adicionales que necesitaremos
-import Content from './Content';
+import { FC, useState } from 'react';
+import Label from './Label';
+import './Labeler.scss';
+import AddContent from './AddContent';
 
 type LabelerProps = {
 	values: any[];
 	title?: string;
-	onChange: (values: any[]) => void;
+	onChange: (values: any) => void;
 };
 
 const Labeler: FC<LabelerProps> = ({ values, title, onChange }) => {
 	const [selected, setSelected] = useState<number | null>(null);
-	const [inputValue, setInputValue] = useState<string>('');
 
-	const handleAdd = () => {
-		if (inputValue.trim() !== '') {
-			const updatedValues = [...values, inputValue];
+	const handleAdd = (value: string) => {
+		if (value.trim() !== '') {
+			const updatedValues = [...values, value];
 			onChange(updatedValues);
-			setInputValue('');
 		}
 	};
 
@@ -28,33 +26,19 @@ const Labeler: FC<LabelerProps> = ({ values, title, onChange }) => {
 
 	return (
 		<div className="labeler">
-			<h3 className="subtitles">{title}</h3>
+			<h3 className="labels">{title}</h3>
 			<div className="labeler-main">
-				{values.map((value, index) => (
-					<Label
-						className={index === selected ? 'labeler-main--selected' : ''}
-						key={index}
-						value={value}
-						onClick={() => (selected === index ? setSelected(null) : setSelected(index))}
-						onRemove={() => handleRemove(index)}
-					/>
-				))}
-				<Content
-					name="labeler-input"
-					type="text"
-					value={inputValue}
-					onChange={setInputValue}
-					onEnter={handleAdd}
-					placeholder="Añade una etiqueta"
-					suffix={
-						<button onClick={handleAdd} className="labeler-add">
-							+
-						</button>
-					}
-				/>
-				{/* <button onClick={handleAdd} className="labeler-add">
-					+
-				</button> */}
+				{!!values.length &&
+					values.map((value, index) => (
+						<Label
+							className={index === selected ? 'labeler-main--selected' : ''}
+							key={index}
+							value={value}
+							onClick={() => (selected === index ? setSelected(null) : setSelected(index))}
+							onRemove={() => handleRemove(index)}
+						/>
+					))}
+				<AddContent onAdd={value => value && handleAdd(value)} />
 			</div>
 		</div>
 	);

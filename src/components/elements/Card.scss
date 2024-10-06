@@ -10,6 +10,8 @@
 
 	&:hover {
 		border: var(--border_hover);
+
+		filter: blur(0px);
 	}
 
 	&-head {

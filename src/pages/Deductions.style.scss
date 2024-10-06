@@ -12,6 +12,15 @@
 		width: 100%;
 		
 		gap: var(--inner-gap);
+		
+		&-add {
+			width: 100%;
+			height: 100%;
+			max-width: 200px;
+			max-height: 200px;
+			display: flex;
+			justify-content: center;
+		}
 
 	}
 

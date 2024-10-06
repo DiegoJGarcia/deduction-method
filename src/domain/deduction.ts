@@ -3,12 +3,11 @@ export enum EXPERIMENT_STATUS {
 	positive = 'positive',
 	negative = 'negative',
 }
-export interface Experiment {
+export interface Consequence {
 	id?: string;
-	consequence: string;
+	description: string;
 	experiment: string;
 	status: EXPERIMENT_STATUS;
-	date?: string;
 }
 
 export enum HYPOTHESIS_STATUS {
@@ -19,11 +18,11 @@ export enum HYPOTHESIS_STATUS {
 export interface Hypothesis {
 	id?: string;
 	description: string;
-	experiments: Experiment[];
+	consequences: Consequence[];
 	status: HYPOTHESIS_STATUS;
 }
 
-export interface Clue {
+export interface Fact {
 	id?: string;
 	description: string;
 	verified: boolean;
@@ -41,9 +40,10 @@ export interface Deduction {
 	title: string;
 	image?: string;
 	problem: string; // disease
-	clues: Clue[]; // symptoms
-	hypotheses: Hypothesis[]; // preliminaries theories
+	facts: Fact[]; // symptoms
+	hypotheses: Hypothesis[]; // theories
 	status?: DEDUCTION_STATUS;
 	conclusion?: string; // diagnosis
 	updated?: string;
+	[key: string]: any;
 }

@@ -49,7 +49,7 @@ import create from 'zustand';
 const useStore = create((set) => ({
   methods: [],
   addMethod: (problem) => set((state) => ({
-    methods: [...state.methods, { problem, clues: [], hypotheses: [] }],
+    methods: [...state.methods, { problem, facts: [], hypotheses: [] }],
   })),
 }));
 Configuración y Despliegue

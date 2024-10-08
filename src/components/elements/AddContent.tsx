@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import './AddContent.scss';
 
 import Content from './Content';
@@ -12,13 +12,16 @@ type AddContentProps = {
 const AddContent: FC<AddContentProps> = ({ onAdd, className, disabled }) => {
 	const [value, setValue] = useState<string>('');
 
+	useEffect(() => {
+		value;
+	}, [value]);
 	const changeing = (value: string) => {
 		setValue(value);
 	};
 
 	const adding = (value: string) => {
-		setValue('');
 		onAdd && onAdd(value);
+		setValue('');
 	};
 
 	return (
@@ -27,16 +30,16 @@ const AddContent: FC<AddContentProps> = ({ onAdd, className, disabled }) => {
 				disabled={disabled}
 				name="add-content"
 				type="text"
-				onChange={changeing}
 				value={value}
+				onChange={(val: string) => changeing(val)}
 				onEnter={() => adding(value)}
 				placeholder="Añade una etiqueta"
-				suffix={
-					<button onClick={() => adding(value)} className="add-content-button">
-						+
-					</button>
-				}
 			/>
+			{value !== '' && (
+				<button onClick={() => adding(value)} className="add-content-button">
+					+
+				</button>
+			)}
 		</div>
 	);
 };

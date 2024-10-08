@@ -1,8 +1,8 @@
 export enum MAIN_PATHS {
 	authentication = '/authentication',
 	gate = '/',
-	deductions = '/deductions',
-	deduction = '/deductions/:deductionName',
+	diagnoses = '/diagnoses',
+	diagnosis = '/diagnoses/:diagnosisName',
 }
 
 export const REGEX = {

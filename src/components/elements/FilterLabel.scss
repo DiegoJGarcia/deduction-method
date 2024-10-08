@@ -1,0 +1,28 @@
+.fliter-label {
+	width: 100%;
+	max-width: 222px;
+	display: grid;
+	place-content: center;
+	cursor: pointer;
+
+	border: var(--border);
+	border-radius: var(--radius);
+
+	margin-top: 27px;
+	padding: 4px;
+	
+	&--focus {
+		filter: blur(0) opacity(1);
+		box-shadow: var(--shadow-up) var(--shadow-color);
+	}
+
+	filter: blur(2px) opacity(0.7);
+
+	&:hover {
+		border: var(--border_hover);
+		box-shadow: var(--shadow-up) var(--shadow-color);
+		transform: var(--transform);
+
+		filter: blur(0) opacity(1);
+	}
+}

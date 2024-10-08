@@ -17,8 +17,8 @@ export const useNav = (): UseNav => {
 	const goTo = (path: string, param?: string) => {
 		let finalPath = path;
 
-		if (param && path.includes(':deductionName')) {
-			finalPath = path.replace(':deductionName', makeQuery(param));
+		if (param && path.includes(':diagnosisName')) {
+			finalPath = path.replace(':diagnosisName', makeQuery(param));
 		}
 
 		if (finalPath) {

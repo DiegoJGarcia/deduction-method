@@ -22,11 +22,11 @@ export interface Hypothesis {
 	status: HYPOTHESIS_STATUS;
 }
 
-export interface Fact {
+export interface Medication {
 	id?: string;
-	description: string;
-	verified: boolean;
-	source?: string;
+	medication: string;
+	dosage: string;
+	duration: string;
 }
 
 export enum DEDUCTION_STATUS {
@@ -35,15 +35,16 @@ export enum DEDUCTION_STATUS {
 	reviewed = 'reviewed',
 }
 
-export interface Deduction {
+export interface Diagnosis {
 	id?: string;
-	title: string;
-	image?: string;
-	problem: string; // disease
-	facts: Fact[]; // symptoms
-	hypotheses: Hypothesis[]; // theories
+	name: string;
+	code?: string;
+	problem: string;
+	symptoms: string[];
+	hypothesis: Hypothesis[];
 	status?: DEDUCTION_STATUS;
-	conclusion?: string; // diagnosis
-	updated?: string;
+	conclusion?: string;
+	finished?: boolean;
+	medication?: Medication;
 	[key: string]: any;
 }

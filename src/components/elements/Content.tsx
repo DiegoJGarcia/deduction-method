@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef, useEffect } from 'react';
+import React, { FC, useState, useEffect, useRef } from 'react';
 import './Content.scss';
 import useDebounceEffect from 'hooks/debounceEffect.hook';
 import moment from 'moment';
@@ -33,8 +33,8 @@ type ContentProps = {
 	readOnly?: boolean;
 	onBlur?: () => void;
 	onClick?: () => void;
-	onChange?: (value: any, name: string | any) => void;
-	onEnter?: () => void;
+	onChange?: (value: any, name: string) => void;
+	onEnter?: (value: any) => void;
 	onStartTyping?: () => void;
 	onDebouncedChange?: (value: any, name: string) => void;
 	min?: number;
@@ -82,8 +82,7 @@ const Content: FC<ContentProps> = ({
 	maxWidth,
 	blured,
 }) => {
-	const [text, setText] = useState<string>('');
-	const [typing, setTyping] = useState<boolean>(false);
+	const [text, setText] = useState<string>(value ?? '');
 	const [number, setNumber] = useState<number>(value ?? min);
 	const [checked, setChecked] = useState<boolean>(defaultChecked);
 	const [date, setDate] = useState<Record<string, string | number>>({
@@ -94,25 +93,46 @@ const Content: FC<ContentProps> = ({
 	});
 	const textRef = useRef<any>();
 
+	// Sincroniza el valor del estado interno con la prop 'value'
+	useEffect(() => {
+		if (
+			type === 'text' ||
+			type === 'textarea' ||
+			type === 'email' ||
+			type === 'tel' ||
+			type === 'url' ||
+			type === 'search'
+		) {
+			setText(value ?? '');
+		} else if (type === 'number') {
+			setNumber(value ?? min);
+		} else if (type === 'checkbox') {
+			setChecked(value ?? defaultChecked);
+		} else if (type === 'date') {
+			setDate({
+				month: moment(value).format('MMMM').toLowerCase(),
+				year: moment(value).format('YYYY'),
+				min: Number(moment(value).format('YYYY')) - 100,
+				max: Number(moment(value).format('YYYY')),
+			});
+		}
+	}, [value, type, min, defaultChecked]);
+
+	// Debounce para actualizaciones retardadas
 	useDebounceEffect(
 		() => {
-			if (text !== '') {
-				onDebouncedChange && onDebouncedChange(text, name);
-				setTyping(false);
+			if (onDebouncedChange && text !== '') {
+				onDebouncedChange(text, name);
 			}
 		},
 		[text],
-		2000,
+		400,
 	);
 
-	const innerChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const newValue = e.target.value;
 		setText(newValue);
-		onChange && onChange(newValue, name);
-		if (!typing) {
-			onStartTyping && onStartTyping();
-			setTyping(true);
-		}
+		if (onChange) onChange(newValue, name);
 		if (type === 'textarea' && textRef.current) {
 			textRef.current.style.height = 'auto';
 			textRef.current.style.height = `${textRef.current.scrollHeight}px`;
@@ -123,14 +143,14 @@ const Content: FC<ContentProps> = ({
 		const newValue = number + delta;
 		if (newValue >= min && newValue <= max) {
 			setNumber(newValue);
-			onChange && onChange(newValue, name);
+			if (onChange) onChange(newValue, name);
 		}
 	};
 
 	const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const newValue = e.target.checked;
 		setChecked(newValue);
-		onChange && onChange(newValue, name);
+		if (onChange) onChange(newValue, name);
 	};
 
 	const changeDate = (subName: string, value: string | any) => {
@@ -139,38 +159,12 @@ const Content: FC<ContentProps> = ({
 		const newDate = moment(
 			subName === 'month' ? `${value}-${newDateFixed.year}` : `${newDateFixed.month}-${value}`,
 		).format('MMMM YYYY');
-		onChange && onChange(newDate, name);
+		if (onChange) onChange(newDate, name);
 	};
-
-	const getInputMode = () => {
-		switch (type) {
-			case 'email':
-				return 'email';
-			case 'tel':
-				return 'tel';
-			case 'url':
-				return 'url';
-			case 'search':
-				return 'search';
-			case 'number':
-				return 'numeric';
-			default:
-				return 'text';
-		}
-	};
-
-	useEffect(() => {
-		if (type === 'textarea' && textRef.current) {
-			textRef.current.style.height = 'auto';
-			textRef.current.style.height = `${textRef.current.scrollHeight}px`;
-		}
-	}, [text]);
 
 	return (
 		<div
-			className={`content content--${type}${fly ? ' content--fly' : ''}${
-				blured ? ' content--blured' : ''
-			}`}
+			className={`content content--${type}${fly ? ' content--fly' : ''}${blured ? ' content--blured' : ''}`}
 			onClick={onClick}
 			onBlur={onBlur}
 			style={maxWidth ? { maxWidth: `${maxWidth}px` } : undefined}
@@ -187,33 +181,29 @@ const Content: FC<ContentProps> = ({
 						type={type}
 						autoFocus={autoFocus}
 						tabIndex={tabIndex}
-						inputMode={getInputMode()}
 						ref={textRef}
 						name={name}
-						className={`${className ? ` ${className}` : ''}${
-							readOnly ? ' content--non-editable' : ''
-						} values`}
+						className={`${className ? ` ${className}` : ''}${readOnly ? ' content--non-editable' : ''} values`}
 						placeholder={placeholder || name}
-						onChange={innerChange}
-						onKeyDown={e => e.key === 'Enter' && (onEnter ? onEnter() : textRef.current.blur())}
+						onChange={handleInputChange}
+						onKeyDown={e => e.key === 'Enter' && (onEnter ? onEnter(text) : textRef.current.blur())}
 						spellCheck={false}
 						readOnly={readOnly}
-						value={value ?? text}
+						value={text}
 						maxLength={max}
 					/>
 				) : type === 'textarea' ? (
 					<textarea
 						autoFocus={autoFocus}
-						inputMode={getInputMode()}
 						ref={textRef}
 						name={name}
 						className={`${className ? `${className} ` : ''}values`}
 						placeholder={placeholder || name}
-						onChange={innerChange}
+						onChange={handleInputChange}
 						onKeyDown={e => e.key === 'Enter' && textRef.current.blur()}
 						spellCheck={false}
 						readOnly={readOnly}
-						value={value ?? text}
+						value={text}
 						maxLength={max}
 					/>
 				) : type === 'number' ? (
@@ -221,7 +211,7 @@ const Content: FC<ContentProps> = ({
 						<Button notFlow onClick={() => handleNumberChange(-1)}>
 							-
 						</Button>
-						<div className={`${className ?? ''}`}>{value ?? number}</div>
+						<div className={`${className ?? ''}`}>{number}</div>
 						<Button notFlow onClick={() => handleNumberChange(1)}>
 							+
 						</Button>
@@ -243,27 +233,19 @@ const Content: FC<ContentProps> = ({
 							<div className="date-years">
 								<img
 									className="date-years-arrow"
-									onClick={() =>
-										Number(date.year) > Number(date.min) &&
-										changeDate('year', String(Number(date.year) - 1))
-									}
+									onClick={() => changeDate('year', String(Number(date.year) - 1))}
 									src={arrowBack}
 									alt="arrowBack"
 								/>
 								<div className="date-years-item">
 									<div className="date-years-item-year">{date.year}</div>
-									<div>{`${MONTHS[date?.month][0]}${MONTHS[date?.month][1]}${
-										MONTHS[date?.month][2]
-									}`}</div>
+									<div>{`${MONTHS[date?.month][0]}${MONTHS[date?.month][1]}${MONTHS[date?.month][2]}`}</div>
 								</div>
 								<img
 									className="date-years-arrow"
-									onClick={() =>
-										Number(date.year) < Number(date.max) &&
-										changeDate('year', String(Number(date.year) + 1))
-									}
+									onClick={() => changeDate('year', String(Number(date.year) + 1))}
 									src={arrow}
-									alt="arrowBack"
+									alt="arrow"
 								/>
 							</div>
 							<div className="date-months">
@@ -271,9 +253,7 @@ const Content: FC<ContentProps> = ({
 									<div
 										key={month}
 										onClick={() => changeDate('month', month)}
-										className={`date-months-item${
-											date?.month === month ? ' date-months-item--selected' : ''
-										}`}
+										className={`date-months-item${date?.month === month ? ' date-months-item--selected' : ''}`}
 										style={{ gridArea: month }}
 									>
 										<div className="date-months-item--number">{i + 1}</div>
@@ -284,9 +264,7 @@ const Content: FC<ContentProps> = ({
 						</div>
 					</div>
 				) : null}
-				{(showFix || ((text || value) && suffix)) && (
-					<div className="refs content--extra">{suffix}</div>
-				)}
+				{(showFix || suffix) && <div className="refs content--extra">{suffix}</div>}
 			</div>
 		</div>
 	);

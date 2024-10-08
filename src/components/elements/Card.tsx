@@ -62,7 +62,7 @@ const Card: FC<CardProps> = ({
 					{confirmLabel || 'Confirmar'}
 				</Button>
 			)}
-			<div className={`card-head refs`}>{title}</div>
+			<div className={`card-head titles`}>{title}</div>
 			<div className="card-remove">
 				{onRemove && !noRemovable && (
 					<Action type="remove" icon={remove} onClick={onRemove} tooltip="Eliminar" />

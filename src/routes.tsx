@@ -6,8 +6,8 @@ const GatePage = lazy(() => import('pages/Gate.page'));
 
 const AuthenticationPage = lazy(() => import('pages/Authentication.page'));
 
-const DeductionsPage = lazy(() => import('pages/Deductions.page'));
-const DeductionPage = lazy(() => import('pages/Deduction.page'));
+const DiagnosesPage = lazy(() => import('pages/Diagnoses.page'));
+const AnalyzePage = lazy(() => import('pages/Analyze.page'));
 
 export interface IRoute {
 	name: string;
@@ -40,18 +40,18 @@ export const AUTH_ROUTE: IRoute = {
 
 export const MAIN_ROUTES: IRoute[] = [
 	{
-		name: 'deductions',
-		path: MAIN_PATHS.deductions,
+		name: 'diagnoses',
+		path: MAIN_PATHS.diagnoses,
 		key: 2.1,
 		index: true,
-		label: 'Deductions',
-		element: <DeductionsPage />,
+		label: 'Diagnoses',
+		element: <DiagnosesPage />,
 	},
 	{
-		name: 'deduction',
-		path: MAIN_PATHS.deduction,
+		name: 'diagnosis',
+		path: MAIN_PATHS.diagnosis,
 		key: 2.2,
-		label: 'Deduction',
-		element: <DeductionPage />,
+		label: 'Diagnosis',
+		element: <AnalyzePage />,
 	},
 ];

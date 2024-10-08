@@ -5,25 +5,25 @@ import { useNav } from 'hooks/nav.hook';
 import { MAIN_PATHS } from 'common/constants';
 import Button from 'components/elements/Button';
 import { useAuth } from 'hooks/auth.hook';
-import useWorkDeductionsStore from 'global/workDeduction/workDeduction.store';
+import useAnalyzesStore from 'global/analyze/analyze.store';
 
 const GatePage = () => {
 	const { isAuth } = useAuth();
 
-	const { workDeduction } = useWorkDeductionsStore();
+	const { analyze } = useAnalyzesStore();
 	const { goTo, pageName, locationName } = useNav();
 
 	const analyzeRedirections = () => {
 		switch (pageName) {
-			case MAIN_PATHS.deductions:
+			case MAIN_PATHS.diagnoses:
 				if (!isAuth) {
 					goTo(MAIN_PATHS.authentication);
 				}
 				break;
 
-			case MAIN_PATHS.deduction:
-				if (!workDeduction) {
-					goTo(MAIN_PATHS.deductions);
+			case MAIN_PATHS.diagnosis:
+				if (!analyze) {
+					goTo(MAIN_PATHS.diagnoses);
 				}
 				break;
 
@@ -38,10 +38,10 @@ const GatePage = () => {
 
 	return (
 		<Layout
-			title={`${workDeduction?.title || 'Diagnosticos'}`}
+			title={`${analyze?.title || 'Diagnosticos'}`}
 			action={
-				locationName !== MAIN_PATHS.deductions && (
-					<Button type="secondary" flux="back" onClick={() => goTo(MAIN_PATHS.deductions)}>
+				locationName !== MAIN_PATHS.diagnoses && (
+					<Button type="secondary" flux="back" onClick={() => goTo(MAIN_PATHS.diagnoses)}>
 						Mis Diagnosticos
 					</Button>
 				)

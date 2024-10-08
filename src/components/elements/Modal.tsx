@@ -3,6 +3,7 @@ import './Modal.scss';
 import Action from './Action';
 
 import error from 'assets/error.png';
+import Card from './Card';
 
 type ModalProps = {
 	title?: string;
@@ -14,16 +15,17 @@ type ModalProps = {
 const Modal: FC<ModalProps> = ({ title, open = false, onClose, children }) => {
 	return (
 		<div className={`modal ${open && 'modal--open'}`}>
-			{title && <h2 className="modal-title titles">{title}</h2>}
-			<Action
-				className="modal-close"
-				onClick={onClose}
-				icon={error}
-				tooltip="Cerrar"
-				notBackground
-				side="left"
-			/>
-			<div className="modal-body">{children}</div>
+			<Card className="modal-card" onClick={onClose} title={title}>
+				<Action
+					className="modal-close"
+					onClick={onClose}
+					icon={error}
+					tooltip="Cerrar"
+					notBackground
+					side="left"
+				/>
+				<div className="modal-body">{children}</div>
+			</Card>
 		</div>
 	);
 };

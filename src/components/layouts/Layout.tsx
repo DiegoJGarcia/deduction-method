@@ -12,7 +12,7 @@ const Layout: FC<LayoutProps> = ({ title, action, children }) => {
 		<div className={`layout`}>
 			{title && (
 				<div className={`layout-head`}>
-					<h1 className="bigtitles">{title}</h1>
+					<h1 className="titles">{title}</h1>
 					<div className="layout-head-actions">{action}</div>
 				</div>
 			)}

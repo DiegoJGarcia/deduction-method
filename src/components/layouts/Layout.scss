@@ -3,14 +3,16 @@
 	height: 100vh;
 
 	background: var(--background);
-	
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
-	align-items: center;
-	
+
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 10vh 90vh;
+	grid-template-areas:
+		'head'
+		'main';
+
 	&-head {
-		width: 100%;
+		grid-area: head;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -19,11 +21,9 @@
 	}
 
 	&-main {
-		height: 100%;
-		width: 100%;
+		grid-area: main;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		overflow-y: auto;
 	}
 }

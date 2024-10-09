@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useState } from 'react';
 
 import './FilterLabel.scss';
 
@@ -6,7 +6,6 @@ type FilterLabelProps = {
 	category?: string;
 	onClick?: (category: string) => void;
 	children?: ReactNode;
-	focus?: boolean;
 	blured?: boolean;
 	className?: string;
 };
@@ -17,14 +16,18 @@ const FilterLabel: FC<FilterLabelProps> = ({
 	children,
 	className,
 	blured,
-	focus,
 }) => {
+	const [focused, setFocused] = useState(false);
+
 	return (
 		<div
 			className={`fliter-label${` fliter-label--${category}`} codes${className ? ` ${className}` : ''}${
 				blured ? ' fliter-label--blured' : ''
-			}${focus ? ' fliter-label--focus' : ''}`}
-			onClick={() => onClick && onClick(category)}
+			}${focused ? ' fliter-label--focus' : ''}`}
+			onClick={() => {
+				onClick && onClick(category);
+				setFocused(!focused);
+			}}
 		>
 			{children || category?.toUpperCase()}
 		</div>

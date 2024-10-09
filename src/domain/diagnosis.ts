@@ -45,6 +45,7 @@ export interface Diagnosis {
 	status?: DEDUCTION_STATUS;
 	conclusion?: string;
 	finished?: boolean;
-	medication?: Medication;
+	medication?: Medication[];
+	date?: string;
 	[key: string]: any;
 }

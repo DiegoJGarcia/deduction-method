@@ -1,6 +1,6 @@
 import { ReactElement, Suspense } from 'react';
 
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { IRoute, ENTRY_ROUTE, MAIN_ROUTES, AUTH_ROUTE } from './routes';
 
 const App = (): ReactElement => {
@@ -22,6 +22,7 @@ const App = (): ReactElement => {
 				</Route>
 
 				<Route key={AUTH_ROUTE.key} path={AUTH_ROUTE.path} element={AUTH_ROUTE.element} />
+				<Route path="*" element={<Navigate to={ENTRY_ROUTE.path} replace />} />
 			</Routes>
 		</Suspense>
 	);

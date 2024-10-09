@@ -1,6 +1,7 @@
 import useAnalyzesStore from 'global/analyze/analyze.store';
 import { initialDiagnosesState, DiagnosesState } from './diagnoses.state';
 import { createStoreWithMiddleware } from 'utils/storeCreator.util';
+import moment from 'moment';
 
 const useDiagnosesStore = createStoreWithMiddleware<DiagnosesState>(
 	set => ({
@@ -25,6 +26,7 @@ const useDiagnosesStore = createStoreWithMiddleware<DiagnosesState>(
 
 		addDiagnosis: () => {
 			const newId = Math.random().toString(36).substring(2, 9);
+			const today = moment().format('DD MMMM YYYY');
 			set(state => ({
 				diagnoses: [
 					...state.diagnoses,
@@ -35,6 +37,7 @@ const useDiagnosesStore = createStoreWithMiddleware<DiagnosesState>(
 						symptoms: [],
 						hypothesis: [],
 						conclusion: '',
+						date: today,
 					},
 				],
 			}));

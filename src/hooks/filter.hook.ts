@@ -10,9 +10,9 @@ const normalizeValue = (value: any) => {
 	} else if (typeof value === 'object' && value !== null) {
 		return Object.values(value).map(v => (typeof v === 'string' ? v.trim().toLowerCase() : v));
 	} else if (typeof value === 'string') {
-		return value.trim().toLowerCase();
+		return [value.trim().toLowerCase()];
 	}
-	return value;
+	return [];
 };
 
 const getGroupedTags = (tags: string[]) => {
@@ -39,9 +39,9 @@ const getGroupedTags = (tags: string[]) => {
 	return { groupedTags, tagMapping };
 };
 
-const useFilter = (initialData: any[], filterKey = '') => {
+const useFilter = (initialData: any[], filterKey = '', startSearchTerm = '') => {
 	const [filters, setFilters] = useState<string[]>([]);
-	const [searchTerm, setSearchTerm] = useState<string>('');
+	const [searchTerm, setSearchTerm] = useState<string>(startSearchTerm);
 
 	const { availableFilters, tagMapping } = useMemo(() => {
 		const allValues = initialData
@@ -66,6 +66,8 @@ const useFilter = (initialData: any[], filterKey = '') => {
 				const value = getNestedValue(item, filterKey);
 				const normalizedValues = normalizeValue(value);
 
+				if (!Array.isArray(normalizedValues)) return false;
+
 				return filters.some(filter => {
 					const mappedFilters = Object.keys(tagMapping).filter(tag => tagMapping[tag] === filter);
 					return normalizedValues.some((val: any) => mappedFilters.includes(val));
@@ -74,12 +76,16 @@ const useFilter = (initialData: any[], filterKey = '') => {
 		}
 
 		if (searchTerm.trim()) {
-			const lowercasedTerm = searchTerm.toLowerCase();
+			const keywords = searchTerm.toLowerCase().split(' ').filter(Boolean);
 
 			data = data.filter(item => {
 				const normalizedValues = Object.values(item).flatMap(value => normalizeValue(value) || []);
 
-				return normalizedValues.some(val => val.toString().includes(lowercasedTerm));
+				if (!Array.isArray(normalizedValues)) return false;
+
+				return keywords.every(keyword =>
+					normalizedValues.some(val => val.toString().includes(keyword)),
+				);
 			});
 		}
 
@@ -92,6 +98,11 @@ const useFilter = (initialData: any[], filterKey = '') => {
 		);
 	};
 
+	const clearFilters = () => {
+		setFilters([]);
+		setSearchTerm('');
+	};
+
 	return {
 		filteredData,
 		availableFilters,
@@ -99,6 +110,7 @@ const useFilter = (initialData: any[], filterKey = '') => {
 		searchTerm,
 		setSearchTerm,
 		handleFilterChange,
+		clearFilters,
 	};
 };
 

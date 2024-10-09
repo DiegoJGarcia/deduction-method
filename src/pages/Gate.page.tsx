@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import './Gate.style.scss';
 import Layout from 'components/layouts/Layout';
 import { Outlet } from 'react-router-dom';
 import { useNav } from 'hooks/nav.hook';
@@ -10,7 +11,7 @@ import useAnalyzesStore from 'global/analyze/analyze.store';
 const GatePage = () => {
 	const { isAuth } = useAuth();
 
-	const { analyze } = useAnalyzesStore();
+	const { analyze, saveAnalyze } = useAnalyzesStore();
 	const { goTo, pageName, locationName } = useNav();
 
 	const analyzeRedirections = () => {
@@ -21,12 +22,21 @@ const GatePage = () => {
 				}
 				break;
 
-			case MAIN_PATHS.diagnosis:
+			case MAIN_PATHS.analyze:
 				if (!analyze) {
 					goTo(MAIN_PATHS.diagnoses);
 				}
 				break;
 
+			case MAIN_PATHS.authentication:
+				if (isAuth) {
+					goTo(MAIN_PATHS.diagnoses);
+				}
+				break;
+
+			case MAIN_PATHS.gate:
+				goTo(MAIN_PATHS.diagnoses);
+				break;
 			default:
 				break;
 		}
@@ -41,9 +51,22 @@ const GatePage = () => {
 			title={`${analyze?.title || 'Diagnosticos'}`}
 			action={
 				locationName !== MAIN_PATHS.diagnoses && (
-					<Button type="secondary" flux="back" onClick={() => goTo(MAIN_PATHS.diagnoses)}>
-						Mis Diagnosticos
-					</Button>
+					<div className="gate-actions">
+						<Button type="secondary" flux="back" onClick={() => goTo(MAIN_PATHS.diagnoses)}>
+							Salir
+						</Button>
+						{locationName.includes('analyze') && (
+							<Button
+								type="save"
+								onClick={() => {
+									saveAnalyze(analyze);
+									goTo(MAIN_PATHS.diagnoses);
+								}}
+							>
+								Guardar y salir
+							</Button>
+						)}
+					</div>
 				)
 			}
 		>

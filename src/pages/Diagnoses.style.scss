@@ -18,17 +18,23 @@
 		width: 100%;
 		height: 100%;
 		display: flex;
-		flex-direction: column;
 		justify-content: flex-start;
 		gap: var(--inner-gap);
-	}
 
-	&-card {
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
-		gap: var(--inner-gap);
+		button {
+			margin: 11px 0 0 0;
+		}
+
+		&-diagnosis {
+			padding: var(--padding);
+			width: 100%;
+			height: fit-content;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			background: var(--background_main);
+			gap: var(--inner-gap);
+		}
 	}
 
 	&-emptystate {
@@ -45,8 +51,10 @@
 	.diagnoses {
 		padding: var(--padding);
 
-		&-card {
-			width: 299px;
+		&-list {
+			&-diagnosis {
+				width: 344px;
+			}
 
 			&-add {
 				max-width: 200px;

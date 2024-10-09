@@ -11,6 +11,8 @@ interface FilterProps {
 	filterKey?: string;
 	onFilterChange: (filteredData: any[]) => void;
 	action?: React.ReactNode;
+	startSearchTerm?: string;
+	filterDates?: boolean;
 }
 
 const Filter: React.FC<FilterProps> = ({
@@ -19,9 +21,11 @@ const Filter: React.FC<FilterProps> = ({
 	filterKey,
 	onFilterChange,
 	action,
+	startSearchTerm,
+	filterDates,
 }) => {
 	const { filteredData, availableFilters, searchTerm, setSearchTerm, handleFilterChange } =
-		useFilter(initialData, filterKey);
+		useFilter(initialData, filterKey, startSearchTerm);
 
 	React.useEffect(() => {
 		onFilterChange(filteredData);
@@ -41,14 +45,10 @@ const Filter: React.FC<FilterProps> = ({
 			</div>
 			<div className="filter-labels">
 				{availableFilters.map(option => (
-					<FilterLabel
-						key={option}
-						onClick={() => handleFilterChange(option)}
-						category={option}
-						focus={filteredData.some(item => item[filterKey || ''] === option)}
-					/>
+					<FilterLabel key={option} onClick={() => handleFilterChange(option)} category={option} />
 				))}
 			</div>
+			{filterDates && <Content label="Fecha" name="daily" type="daily" onChange={setSearchTerm} />}
 			<div className="filter-action">{action}</div>
 		</div>
 	);

@@ -13,6 +13,7 @@ import Labeler from 'components/elements/Labeler';
 import { useNav } from 'hooks/nav.hook';
 import { MAIN_PATHS } from 'common/constants';
 import Modal from 'components/elements/Modal';
+import useTime from 'hooks/time.hook';
 
 const DiagnosesPage: React.FC<any> = () => {
 	const {
@@ -25,6 +26,7 @@ const DiagnosesPage: React.FC<any> = () => {
 		updateFacts,
 	} = useDiagnosesStore();
 
+	const { today } = useTime();
 	const [showMedication, setShowMedication] = useState(false);
 
 	const [filteredData, setFilteredData] = useState<Diagnosis[]>(diagnoses || []);
@@ -37,7 +39,7 @@ const DiagnosesPage: React.FC<any> = () => {
 
 	const analyze = (diagnosis: Diagnosis, dedName: string) => {
 		selectDiagnosis(diagnosis);
-		goTo(MAIN_PATHS.diagnosis, dedName);
+		goTo(MAIN_PATHS.analyze, dedName);
 	};
 
 	return (
@@ -48,21 +50,25 @@ const DiagnosesPage: React.FC<any> = () => {
 						<Filter
 							initialData={diagnoses}
 							onFilterChange={setFilteredData}
+							// startSearchTerm={today}
+							filterKey="symptoms"
+							// filterDates
 							action={
 								<Button
 									className="diagnoses-head-add"
 									type="primary"
 									onClick={() => addDiagnosis()}
 								>
-									Añadir Deducción
+									Añadir Paciente
 								</Button>
 							}
 						/>
 						<div className="diagnoses-list">
-							{filteredData.length ? (
-								filteredData.map((diagnosis: Diagnosis) => (
+							{filteredData?.length ? (
+								filteredData?.map((diagnosis: Diagnosis) => (
 									<Card
-										className="diagnoses-card"
+										className="diagnoses-list-diagnosis"
+										title="Diagnóstico"
 										key={diagnosis.id}
 										onRemove={() => removeDiagnosis(diagnosis.id)}
 									>
@@ -85,20 +91,15 @@ const DiagnosesPage: React.FC<any> = () => {
 											title="Síntomas"
 											onChange={(newValues: string[]) => updateFacts(diagnosis.id, newValues)}
 										/>
-										<Button
-											className="diagnoses-card-analyze"
-											type="secondary"
-											onClick={() => analyze(diagnosis, diagnosis.title)}
-										>
+										<Button type="secondary" onClick={() => analyze(diagnosis, diagnosis.name)}>
 											Analizar
 										</Button>
 										<Button
-											className="diagnoses-card-analyze"
 											type="tertiary"
 											onClick={() => setShowMedication(true)}
-											disabled={!diagnosis.conclusion && !diagnosis.finished}
+											// disabled={!diagnosis.conclusion && !diagnosis.finished}
 										>
-											Iniciar tratamiento
+											{diagnosis.medication?.length || 0} Tratamientos
 										</Button>
 									</Card>
 								))
@@ -111,7 +112,7 @@ const DiagnosesPage: React.FC<any> = () => {
 					<div className="diagnoses-emptystate subtitles">
 						<h2>No hay diagnosticos</h2>
 						<Button type="primary" onClick={() => addDiagnosis()}>
-							Añadir Deducción
+							Añadir Paciente
 						</Button>
 					</div>
 				)}

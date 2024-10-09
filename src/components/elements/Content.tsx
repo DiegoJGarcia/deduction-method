@@ -25,7 +25,17 @@ export const DAYS = ['mo', 'tu', 'we', 'th', 'fr', 'sa', 'su'];
 export const MONTHS_LIST: string[] = Object.keys(MONTHS);
 
 type ContentProps = {
-	type: 'text' | 'textarea' | 'number' | 'date' | 'checkbox' | 'email' | 'tel' | 'url' | 'search';
+	type:
+		| 'text'
+		| 'textarea'
+		| 'number'
+		| 'date'
+		| 'daily'
+		| 'checkbox'
+		| 'email'
+		| 'tel'
+		| 'url'
+		| 'search';
 	name: string;
 	label?: string;
 	value?: any;
@@ -60,7 +70,7 @@ const Content: FC<ContentProps> = ({
 	name,
 	value,
 	onChange,
-	onStartTyping,
+	// onStartTyping,
 	readOnly,
 	placeholder,
 	className,
@@ -86,14 +96,16 @@ const Content: FC<ContentProps> = ({
 	const [number, setNumber] = useState<number>(value ?? min);
 	const [checked, setChecked] = useState<boolean>(defaultChecked);
 	const [date, setDate] = useState<Record<string, string | number>>({
-		month: moment(value).format('MMMM').toLowerCase(),
-		year: moment(value).format('YYYY'),
-		min: Number(moment(value).format('YYYY')) - 100,
-		max: Number(moment(value).format('YYYY')),
+		month: moment(value || moment())
+			.format('MMMM')
+			.toLowerCase(),
+		year: moment(value || moment()).format('YYYY'),
+		min: Number(moment(value || moment()).format('YYYY')) - 2,
+		max: Number(moment(value || moment()).format('YYYY')),
+		day: Number(moment(value || moment()).format('DD')),
 	});
 	const textRef = useRef<any>();
 
-	// Sincroniza el valor del estado interno con la prop 'value'
 	useEffect(() => {
 		if (
 			type === 'text' ||
@@ -108,17 +120,17 @@ const Content: FC<ContentProps> = ({
 			setNumber(value ?? min);
 		} else if (type === 'checkbox') {
 			setChecked(value ?? defaultChecked);
-		} else if (type === 'date') {
+		} else if (type === 'date' || type === 'daily') {
 			setDate({
 				month: moment(value).format('MMMM').toLowerCase(),
 				year: moment(value).format('YYYY'),
 				min: Number(moment(value).format('YYYY')) - 100,
 				max: Number(moment(value).format('YYYY')),
+				day: Number(moment(value).format('DD')),
 			});
 		}
 	}, [value, type, min, defaultChecked]);
 
-	// Debounce para actualizaciones retardadas
 	useDebounceEffect(
 		() => {
 			if (onDebouncedChange && text !== '') {
@@ -263,6 +275,26 @@ const Content: FC<ContentProps> = ({
 							</div>
 						</div>
 					</div>
+				) : type === 'daily' ? (
+					<input
+						type="date"
+						autoFocus={autoFocus}
+						tabIndex={tabIndex}
+						name={name}
+						className={`${className ? ` ${className}` : ''} values`}
+						onChange={e => {
+							const selectedDate = new Date(e.target.value);
+							const formattedDate = `${selectedDate.getDate()} ${
+								MONTHS[selectedDate.toLocaleString('default', { month: 'long' }).toLowerCase()]
+							} ${selectedDate.getFullYear()}`;
+							setDate({
+								day: selectedDate.getDate(),
+								month: selectedDate.toLocaleString('default', { month: 'long' }).toLowerCase(),
+								year: selectedDate.getFullYear(),
+							});
+							if (onChange) onChange(formattedDate, name);
+						}}
+					/>
 				) : null}
 				{(showFix || suffix) && <div className="refs content--extra">{suffix}</div>}
 			</div>

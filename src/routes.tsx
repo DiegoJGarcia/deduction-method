@@ -48,10 +48,10 @@ export const MAIN_ROUTES: IRoute[] = [
 		element: <DiagnosesPage />,
 	},
 	{
-		name: 'diagnosis',
-		path: MAIN_PATHS.diagnosis,
+		name: 'analyze',
+		path: MAIN_PATHS.analyze,
 		key: 2.2,
-		label: 'Diagnosis',
+		label: 'Analyze',
 		element: <AnalyzePage />,
 	},
 ];

@@ -8,11 +8,15 @@ type LabelProps = {
 	onRemove?: (value: any) => void;
 	value?: any;
 	children?: ReactNode;
+	type?: 'ok' | 'warning' | 'error';
 };
 
-const Label: FC<LabelProps> = ({ value, onClick, onRemove, children, className }) => {
+const Label: FC<LabelProps> = ({ value, onClick, onRemove, children, className, type }) => {
 	return (
-		<div className={`label codes${className ? ` ${className}` : ''}`} onClick={onClick}>
+		<div
+			className={`label codes${className ? ` ${className}` : ''}${type ? ` label--${type}` : ''}`}
+			onClick={onClick}
+		>
 			{value || children}
 			{onRemove && (
 				<div className="label-remove" onClick={() => onRemove(value)}>

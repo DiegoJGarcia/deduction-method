@@ -8,14 +8,16 @@ import Card from './Card';
 type ModalProps = {
 	title?: string;
 	open?: boolean;
+	onClick?: () => void;
 	onClose?: () => void;
+	className?: string;
 	children?: React.ReactNode;
 };
 
-const Modal: FC<ModalProps> = ({ title, open = false, onClose, children }) => {
+const Modal: FC<ModalProps> = ({ title, open = false, onClick, onClose, className, children }) => {
 	return (
 		<div className={`modal ${open && 'modal--open'}`}>
-			<Card className="modal-card" onClick={onClose} title={title}>
+			<Card className="modal-card" onClick={onClick} title={title}>
 				<Action
 					className="modal-close"
 					onClick={onClose}
@@ -24,7 +26,7 @@ const Modal: FC<ModalProps> = ({ title, open = false, onClose, children }) => {
 					notBackground
 					side="left"
 				/>
-				<div className="modal-body">{children}</div>
+				<div className={`modal-content${className ? ` ${className}` : ''}`}>{children}</div>
 			</Card>
 		</div>
 	);

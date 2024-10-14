@@ -14,6 +14,21 @@
 		box-shadow: var(--shadow-up) var(--shadow-color);
 	}
 
+	&--ok {
+		background: var(--ok);
+		color: var(--text_color);
+	}
+
+	&--warning {
+		background: var(--warning);
+		color: var(--text_color);
+	}
+
+	&--error {
+		background: var(--error);
+		color: var(--text_color);
+	}
+
 	&-remove {
 		cursor: pointer;
 		padding: 2px 0 0 0;

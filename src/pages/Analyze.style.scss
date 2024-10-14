@@ -15,10 +15,16 @@
 	overflow-y: auto;
 
 	&-problem {
+		width: 100%;
 		grid-area: problem;
 	}
 	&-conclusion {
 		grid-area: conclusion;
+
+		&-diagnosis {
+			font-size: larger;
+			font-weight: bold;
+		}
 	}
 
 	&-symptoms,
@@ -32,22 +38,113 @@
 		border-radius: var(--radius);
 		border: var(--border);
 		padding: var(--padding);
+		gap: var(--gap);
 	}
 
 	&-symptoms {
 		grid-area: symptoms;
+
+		&-title {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-start;
+			gap: var(--inner-gap);
+		}
 	}
 	&-hypothesis {
 		grid-area: hypothesis;
+
+		&-button {
+			width: 100%;
+			border: 2px solid var(--ok);
+		}
+
+		&-status {
+			width: 100%;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			gap: var(--inner-gap);
+		}
 	}
+
 	&-consequences {
 		grid-area: consequences;
+	}
+
+	&-hypothesis,
+	&-consequences {
+		overflow-y: auto;
+		gap: var(--gap);
+
+		&-card {
+			display: flex;
+			justify-content: flex-start;
+			align-items: flex-start;
+			gap: var(--inner-gap);
+			width: 100%;
+		}
+	}
+
+	&-medication {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: flex-start;
+		align-items: space-between;
+		flex-wrap: wrap;
+		gap: var(--gap);
+
+		&-card {
+			height: fit-content;
+			display: flex;
+			justify-content: flex-start;
+			align-items: flex-start;
+			gap: var(--inner-gap);
+
+			&-title {
+				width: 100%;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding-bottom: var(--padding);
+				gap: var(--inner-gap);
+			}
+
+			&-prescription {
+				width: 100%;
+				height: 100%;
+				display: flex;
+				justify-content: flex-start;
+				align-items: flex-end;
+				flex-wrap: wrap;
+				gap: var(--inner-gap);
+
+				&-data {
+					max-width: 444px;
+				}
+
+				&-actions {
+					width: 100%;
+					display: flex;
+					justify-content: flex-end;
+					align-items: flex-end;
+					padding-top: var(--padding);
+				}
+
+				&-add {
+					width: 100%;
+					align-self: flex-end;
+				}
+			}
+		}
 	}
 }
 
 @media (min-width: 768px) {
 	.analyze {
-		grid-template-columns: 2fr 2fr 1.2fr;
+		grid-template-columns: 1fr 1fr 2fr;
 		grid-template-rows: 144px 1fr;
 		grid-template-areas:
 			'problem conclusion conclusion'

@@ -1,4 +1,4 @@
-import { Consequence, Diagnosis, Hypothesis } from 'domain/diagnosis';
+import { Consequence, Diagnosis, Hypothesis, Medication } from 'domain/diagnosis';
 
 export interface AnalyzesState {
 	analyze: Diagnosis;
@@ -13,7 +13,6 @@ export interface AnalyzesState {
 	// Symptom
 	mutateFact: (fact: string) => void;
 	mutateFacts: (facts: string[]) => void;
-	removeFact: (fact: string | number) => void;
 
 	// Hypothesis
 	mutateHypothesis: (hypothesis: Hypothesis) => void;
@@ -22,6 +21,10 @@ export interface AnalyzesState {
 	// Consequence
 	mutateConsequence: (hypothesisId: string | number, consequence: Consequence) => void;
 	removeConsequence: (hypothesisId: string | number, consequenceId: string | number) => void;
+
+	// Medication
+	mutateMedication: (medication: Medication) => void;
+	removeMedication: (medicationId: string | number) => void;
 
 	toggleConsequenceResult: (hypothesisId: string | number, consequenceId: string | number) => void;
 }
@@ -34,5 +37,5 @@ export const initialAnalyzesState: Diagnosis = {
 	hypothesis: [],
 	conclusion: '',
 	consequences: [],
-	medication: undefined,
+	medication: [],
 };

@@ -4,7 +4,7 @@ export enum EXPERIMENT_STATUS {
 	negative = 'negative',
 }
 export interface Consequence {
-	id?: string;
+	id: string;
 	description: string;
 	experiment: string;
 	status: EXPERIMENT_STATUS;
@@ -16,16 +16,17 @@ export enum HYPOTHESIS_STATUS {
 	invalid = 'invalid',
 }
 export interface Hypothesis {
-	id?: string;
+	id: string;
 	description: string;
 	consequences: Consequence[];
 	status: HYPOTHESIS_STATUS;
 }
 
 export interface Medication {
-	id?: string;
-	medication: string;
+	id: string;
+	name: string;
 	dosage: string;
+	repeat: number;
 	duration: string;
 }
 
@@ -45,7 +46,7 @@ export interface Diagnosis {
 	status?: DEDUCTION_STATUS;
 	conclusion?: string;
 	finished?: boolean;
-	medication?: Medication[];
+	medication: Medication[];
 	date?: string;
 	[key: string]: any;
 }

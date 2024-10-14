@@ -296,7 +296,7 @@ const Content: FC<ContentProps> = ({
 						}}
 					/>
 				) : null}
-				{(showFix || suffix) && <div className="refs content--extra">{suffix}</div>}
+				{(showFix || suffix) && <div className="values content--extra">{suffix}</div>}
 			</div>
 		</div>
 	);

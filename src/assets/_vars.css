@@ -1,11 +1,15 @@
 :root {
 	box-sizing: border-box;
 
-	--status-new: #75787a7a;
+	--status-new: #4a4c4d7a;
 	--status-valid: #3b8b5e88;
 	--status-invalid: #7a24247a;
 
-	--focus: #ffd900c9;
+	--experiment-pending: #1f2325;
+	--experiment-positive: #6cac64b7;
+	--experiment-negative: #7a3524;
+
+	--focus: #ffc353b6;
 
 	--category-default: #6b6b6b9a; /* Neutro, profesional */
 	--category-idea: #ff6f43a2; /* Innovación y creatividad */
@@ -23,12 +27,12 @@
 	--third: #563d9c;
 	--fourth: #349121;
 	--fifth: #c23939;
-	--default: #57758db4;
+	--default: #97c2dfa1;
 
 	--load: #396d86a6;
 	--warning: #e9d359b9;
 	--error: #ff5d5d9f;
-	--ok: #9bf253af;
+	--ok: #66993daf;
 
 	--shadow: 0 7px 11px;
 	--shadow-up: 0 22px 22px -11px;
@@ -40,7 +44,7 @@
 	--gap: 29px;
 	--inner-gap: 11px;
 	--transition: all 0.2s ease;
-	--transform: scale(1.1);
+	--transform: scale(1.02);
 
 	--border: 1px solid #333333;
 	--border_hover: 1px solid #737477;

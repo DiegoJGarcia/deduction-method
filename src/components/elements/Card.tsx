@@ -6,10 +6,11 @@ import favorite from 'assets/favorite.png';
 
 import Button from 'components/elements/Button';
 import Action from './Action';
+import { EXPERIMENT_STATUS, HYPOTHESIS_STATUS } from 'domain/diagnosis';
 
 export type CardProps = {
 	title?: string | any;
-	status?: 'new' | 'valid' | 'invalid';
+	status?: HYPOTHESIS_STATUS | EXPERIMENT_STATUS;
 	focus?: boolean;
 	blured?: boolean;
 	onClick?: () => void;

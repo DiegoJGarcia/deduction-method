@@ -10,13 +10,13 @@
 
 	margin-top: 27px;
 	padding: 4px;
+	filter: blur(2px) opacity(0.7);
 	
 	&--focus {
 		filter: blur(0) opacity(1);
 		box-shadow: var(--shadow-up) var(--shadow-color);
 	}
 
-	filter: blur(2px) opacity(0.7);
 
 	&:hover {
 		border: var(--border_hover);

@@ -4,12 +4,18 @@ import './AddContent.scss';
 import Content from './Content';
 
 type AddContentProps = {
-	onAdd?: (value?: string) => void;
+	onAdd?: (value: string) => void;
 	className?: string;
 	disabled?: boolean;
+	placeholder?: string;
 };
 
-const AddContent: FC<AddContentProps> = ({ onAdd, className, disabled }) => {
+const AddContent: FC<AddContentProps> = ({
+	onAdd,
+	className,
+	disabled,
+	placeholder = 'Agregar',
+}) => {
 	const [value, setValue] = useState<string>('');
 
 	useEffect(() => {
@@ -33,7 +39,7 @@ const AddContent: FC<AddContentProps> = ({ onAdd, className, disabled }) => {
 				value={value}
 				onChange={(val: string) => changeing(val)}
 				onEnter={() => adding(value)}
-				placeholder="Añade una etiqueta"
+				placeholder={placeholder}
 			/>
 			{value !== '' && (
 				<button onClick={() => adding(value)} className="add-content-button">

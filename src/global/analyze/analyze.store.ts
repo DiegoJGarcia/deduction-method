@@ -6,6 +6,7 @@ import {
 	EXPERIMENT_STATUS,
 	Hypothesis,
 	HYPOTHESIS_STATUS,
+	Medication,
 } from 'domain/diagnosis';
 import useDiagnosesStore from 'global/diagnoses/diagnoses.store';
 
@@ -50,18 +51,9 @@ const useAnalyzesStore = createStoreWithMiddleware<AnalyzesState>(
 			set({ analyze: { ...get().analyze, symptoms: facts } });
 		},
 
-		removeFact: (fact: string | number) => {
-			set(state => ({
-				analyze: {
-					...state.analyze,
-					symptoms: state.analyze.symptoms.filter((f: string) => f !== fact),
-				},
-			}));
-		},
-
 		mutateHypothesis: (hypothesis: Hypothesis) => {
-			const hypothesisIndex = get().analyze.hypothesis.findIndex(
-				(h: Hypothesis) => h.id === hypothesis.id,
+			const hypothesisIndex = get().analyze.hypothesis?.findIndex(
+				(h: Hypothesis) => h?.id === hypothesis?.id,
 			);
 			const updatedHypotheses = [...get().analyze.hypothesis];
 
@@ -87,8 +79,17 @@ const useAnalyzesStore = createStoreWithMiddleware<AnalyzesState>(
 			const hypothesisIndex = get().analyze.hypothesis.findIndex(
 				(h: Hypothesis) => h.id === hypothesisId,
 			);
+			const consequenceIndex = get().analyze.hypothesis[hypothesisIndex].consequences.findIndex(
+				(c: Consequence) => c.id === consequence.id,
+			);
 			const updatedHypotheses = [...get().analyze.hypothesis];
-			updatedHypotheses[hypothesisIndex].consequences.push(consequence);
+
+			if (consequenceIndex === -1) {
+				updatedHypotheses[hypothesisIndex].consequences.push(consequence);
+				updatedHypotheses[hypothesisIndex].status = HYPOTHESIS_STATUS.invalid;
+			} else {
+				updatedHypotheses[hypothesisIndex].consequences[consequenceIndex] = consequence;
+			}
 
 			set({ analyze: { ...get().analyze, hypothesis: updatedHypotheses } });
 		},
@@ -113,6 +114,30 @@ const useAnalyzesStore = createStoreWithMiddleware<AnalyzesState>(
 			}));
 		},
 
+		mutateMedication: (medication: Medication) => {
+			const medicationIndex = get().analyze?.medication?.findIndex(
+				(m: Medication) => m?.id === medication?.id,
+			);
+			const updatedMedications = [...(get().analyze.medication || [])];
+
+			if (medicationIndex === -1) {
+				updatedMedications.push(medication);
+			} else {
+				updatedMedications[medicationIndex] = medication;
+			}
+
+			set({ analyze: { ...get().analyze, medication: updatedMedications } });
+		},
+
+		removeMedication: (medicationId: string | number) => {
+			set(state => ({
+				analyze: {
+					...state.analyze,
+					medication: state.analyze.medication.filter((m: Medication) => m.id !== medicationId),
+				},
+			}));
+		},
+
 		toggleConsequenceResult: (hypothesisId: string | number, consequenceId: string | number) => {
 			const hypothesisIndex = get().analyze.hypothesis.findIndex(
 				(h: Hypothesis) => h.id === hypothesisId,
@@ -122,10 +147,15 @@ const useAnalyzesStore = createStoreWithMiddleware<AnalyzesState>(
 			const consequenceIndex = currentHypothesis.consequences.findIndex(
 				(consequence: Consequence) => consequence.id === consequenceId,
 			);
+
 			currentHypothesis.consequences[consequenceIndex].status =
 				currentHypothesis.consequences[consequenceIndex].status === EXPERIMENT_STATUS.positive
 					? EXPERIMENT_STATUS.negative
-					: EXPERIMENT_STATUS.positive;
+					: currentHypothesis.consequences[consequenceIndex].status === EXPERIMENT_STATUS.negative
+						? EXPERIMENT_STATUS.pending
+						: currentHypothesis.consequences[consequenceIndex].status === EXPERIMENT_STATUS.pending
+							? EXPERIMENT_STATUS.positive
+							: EXPERIMENT_STATUS.pending;
 
 			const allPositive = currentHypothesis.consequences.every(
 				(conse: Consequence) => conse.status === EXPERIMENT_STATUS.positive,

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Diagnoses.style.scss';
 
 import useDiagnosesStore from 'global/diagnoses/diagnoses.store';
-import { Diagnosis } from 'domain/diagnosis';
+import { Diagnosis, Medication } from 'domain/diagnosis';
 
 import Card from 'components/elements/Card';
 import Content from 'components/elements/Content';
@@ -13,7 +13,8 @@ import Labeler from 'components/elements/Labeler';
 import { useNav } from 'hooks/nav.hook';
 import { MAIN_PATHS } from 'common/constants';
 import Modal from 'components/elements/Modal';
-import useTime from 'hooks/time.hook';
+import Label from 'components/elements/Label';
+// import useTime from 'hooks/time.hook';
 
 const DiagnosesPage: React.FC<any> = () => {
 	const {
@@ -26,8 +27,7 @@ const DiagnosesPage: React.FC<any> = () => {
 		updateFacts,
 	} = useDiagnosesStore();
 
-	const { today } = useTime();
-	const [showMedication, setShowMedication] = useState(false);
+	const [showMedication, setMedicationView] = useState<Medication[]>([]);
 
 	const [filteredData, setFilteredData] = useState<Diagnosis[]>(diagnoses || []);
 
@@ -50,9 +50,7 @@ const DiagnosesPage: React.FC<any> = () => {
 						<Filter
 							initialData={diagnoses}
 							onFilterChange={setFilteredData}
-							// startSearchTerm={today}
 							filterKey="symptoms"
-							// filterDates
 							action={
 								<Button
 									className="diagnoses-head-add"
@@ -96,8 +94,8 @@ const DiagnosesPage: React.FC<any> = () => {
 										</Button>
 										<Button
 											type="tertiary"
-											onClick={() => setShowMedication(true)}
-											// disabled={!diagnosis.conclusion && !diagnosis.finished}
+											onClick={() => setMedicationView(diagnosis.medication)}
+											disabled={!showMedication?.length}
 										>
 											{diagnosis.medication?.length || 0} Tratamientos
 										</Button>
@@ -117,7 +115,19 @@ const DiagnosesPage: React.FC<any> = () => {
 					</div>
 				)}
 			</div>
-			<Modal title="Tratamiento" open={showMedication} onClose={() => setShowMedication(false)} />
+			<Modal
+				title="Tratamiento"
+				open={!!showMedication?.length}
+				onClose={() => setMedicationView([])}
+			>
+				{showMedication?.map((medication: Medication) => (
+					<div key={medication.id}>
+						<Label key={medication.id} value={medication.name} />
+						<Label key={medication.id} value={medication.dosage} />
+						<Label key={medication.id} value={medication.duration} />
+					</div>
+				))}
+			</Modal>
 		</>
 	);
 };

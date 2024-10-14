@@ -55,7 +55,7 @@ const GatePage = () => {
 						<Button type="secondary" flux="back" onClick={() => goTo(MAIN_PATHS.diagnoses)}>
 							Salir
 						</Button>
-						{locationName.includes('analyze') && (
+						{locationName.includes('analisis') && (
 							<Button
 								type="save"
 								onClick={() => {

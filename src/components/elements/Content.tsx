@@ -4,7 +4,6 @@ import useDebounceEffect from 'hooks/debounceEffect.hook';
 import moment from 'moment';
 import arrowBack from 'assets/arrow-back.svg';
 import arrow from 'assets/arrow.svg';
-import Button from './Button';
 
 export const MONTHS: Record<string, string> = {
 	january: 'Enero',
@@ -183,7 +182,7 @@ const Content: FC<ContentProps> = ({
 		>
 			{label && <label className={`content-label content-label--${align} labels`}>{label}</label>}
 			<div className={`content-input`}>
-				{(showFix || (value && prefix)) && <div className="refs content--extra">{prefix}</div>}
+				{(showFix || (!!value && prefix)) && <div className="refs content--extra">{prefix}</div>}
 				{type === 'text' ||
 				type === 'email' ||
 				type === 'tel' ||
@@ -219,15 +218,31 @@ const Content: FC<ContentProps> = ({
 						maxLength={max}
 					/>
 				) : type === 'number' ? (
-					<>
-						<Button notFlow onClick={() => handleNumberChange(-1)}>
+					<div className="content-number">
+						<div onClick={() => handleNumberChange(-1)} className="content-number-action">
 							-
-						</Button>
-						<div className={`${className ?? ''}`}>{number}</div>
-						<Button notFlow onClick={() => handleNumberChange(1)}>
+						</div>
+						<input
+							autoFocus={autoFocus}
+							type="number"
+							name={name}
+							className={`${className ? `${className} ` : ''} content-number-input values`}
+							value={number}
+							min={min}
+							max={max}
+							onChange={e => {
+								const newValue = Number(e.target.value);
+								if (newValue >= min && newValue <= max) {
+									setNumber(newValue);
+									if (onChange) onChange(newValue, name);
+								}
+							}}
+							readOnly={readOnly}
+						/>
+						<div onClick={() => handleNumberChange(1)} className="content-number-action">
 							+
-						</Button>
-					</>
+						</div>
+					</div>
 				) : type === 'checkbox' ? (
 					<input
 						autoFocus={autoFocus}

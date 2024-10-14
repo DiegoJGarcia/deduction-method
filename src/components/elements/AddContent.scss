@@ -5,6 +5,7 @@
 	justify-content: center;
 	align-items: center;
 	gap: var(--inner-gap);
+	z-index: 1;
 
 	&-button {
 		border: none;

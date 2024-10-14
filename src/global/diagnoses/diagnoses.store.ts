@@ -38,6 +38,7 @@ const useDiagnosesStore = createStoreWithMiddleware<DiagnosesState>(
 						hypothesis: [],
 						conclusion: '',
 						date: today,
+						medication: [],
 					},
 				],
 			}));

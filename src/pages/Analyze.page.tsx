@@ -20,6 +20,7 @@ import { useMakeId } from 'hooks/id.hook';
 import Label from 'components/elements/Label';
 import Button from 'components/elements/Button';
 import Modal from 'components/elements/Modal';
+import Selector from 'components/elements/Selector';
 
 const AnalyzePage = (): React.ReactElement => {
 	const {
@@ -206,23 +207,35 @@ const AnalyzePage = (): React.ReactElement => {
 			</div>
 			<Modal
 				className="analyze-medication"
-				title="Tratamiento"
+				title={analyze.name + ' - ' + analyze.code}
 				open={showMedication}
 				onClose={() => setShowMedication(false)}
 			>
 				{analyze?.medication?.map((m: Medication, index: number) => (
-					<Card key={index} className="analyze-medication-card">
-						<div className="analyze-medication-card-title">
-							<div className="titles">{analyze.name}</div>
-							<div className="subtitles">{analyze.code}</div>
+					<Card
+						key={index}
+						className="analyze-medication-card"
+						onRemove={() => removeMedication(m.id)}
+					>
+						<div className="subtitles">{analyze.date}</div>
+						<div className="analyze-medication-card-prescription-duration">
+							<Content
+								className="analyze-medication-card-prescription-data"
+								type="text"
+								name="Cantidad"
+								label="Debe tomar"
+								value={m.dosage}
+							/>
+							<Content
+								className="analyze-medication-card-prescription-data"
+								type="number"
+								name="Repetición"
+								label="Cada"
+								value={m.repeat}
+								max={24}
+								suffix="horas"
+							/>
 						</div>
-						<Content
-							className="analyze-medication-card-prescription-data"
-							type="text"
-							name="Cantidad"
-							label="Debe tomar"
-							value={m.dosage}
-						/>
 						<Content
 							className="analyze-medication-card-prescription-data"
 							type="text"
@@ -230,21 +243,10 @@ const AnalyzePage = (): React.ReactElement => {
 							label="De la siguiente medicación"
 							value={m.name}
 						/>
-						<Content
-							className="analyze-medication-card-prescription-data"
-							type="text"
-							name="Repetición"
-							label="Cada"
-							value={m.repeat}
-							suffix="horas"
-						/>
-						<Content
-							className="analyze-medication-card-prescription-data"
-							type="text"
-							name="Duración"
-							label="Durante"
-							value={m.duration}
-						/>
+						<div className="analyze-medication-card-prescription-duration">
+							<Content type="number" name="Duración" label="Durante" value={m.duration} />
+							<Selector options={['Años', 'Meses', 'Días']} selected={['Semanas']} />
+						</div>
 						<div className="analyze-medication-card-prescription-actions">
 							<Button
 								type="primary"

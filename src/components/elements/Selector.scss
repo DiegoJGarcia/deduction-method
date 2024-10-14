@@ -20,8 +20,8 @@
 		width: 100%;
 
 		&-selected {
-			border: none;
-			background: var(--first);
+			border: var(--border);
+			// background: var(--first);
 			z-index: 14;
 			width: 100%;
 			white-space: nowrap;

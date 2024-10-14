@@ -102,6 +102,7 @@
 			justify-content: flex-start;
 			align-items: flex-start;
 			gap: var(--inner-gap);
+			z-index: 99;
 
 			&-title {
 				width: 100%;
@@ -123,6 +124,11 @@
 
 				&-data {
 					max-width: 444px;
+					display: flex;
+					justify-content: flex-start;
+					align-items: flex-start;
+					flex-wrap: wrap;
+					gap: var(--inner-gap);
 				}
 
 				&-actions {
@@ -131,6 +137,14 @@
 					justify-content: flex-end;
 					align-items: flex-end;
 					padding-top: var(--padding);
+				}
+
+				&-duration {
+					width: 100%;
+					display: flex;
+					justify-content: center;
+					align-items: flex-end;
+					gap: var(--inner-gap);
 				}
 
 				&-add {
